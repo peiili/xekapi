@@ -8,7 +8,7 @@ app.use(morgan('dev'))
 const grabbag = require('./routes/GrabBag')
 
 app.use('/api', grabbag);
-
-app.listen(5166, () => {
-  console.log('App listening on port 5566!');
+const port = 5166
+app.listen(port, () => {
+  console.log(`App listening on port${port}`);
 });
