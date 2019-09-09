@@ -1,9 +1,13 @@
 const morgan = require('morgan')
 const express = require('express')
+const process = require('process')
 
 const app = express()
-
-app.use(morgan('dev'))
+if (process.env.NODE_ENV) {
+  app.use(morgan('dev'))
+} else {
+  app.use(morgan('short'))
+}
 
 const grabbag = require('./routes/GrabBag')
 
