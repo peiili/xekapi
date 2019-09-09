@@ -1,4 +1,5 @@
 const cheerio = require('cheerio');
+const config = require('../src/config');
 
 // 获取列表title
 function findTitle(dom, callback) {
@@ -36,7 +37,7 @@ function findTitle(dom, callback) {
       } else if (img) {
           contentData.content.push(
             {
-              img,
+              img: img.replace('../../', '/attachment/'),
             },
           )
       }
