@@ -1,35 +1,29 @@
 const express = require('express')
-const cheerioFunc = require('../src/cheerio');
-const analyze = require('../src/analyze');
-const config = require('../src/config');
+const db = require('../database/connection');
 
 const router = express.Router()
 
 // 获取文章标题
 router.get('/getList', (req, res) => {
-  cheerioFunc.start(config.url, (body) => {
-    analyze.findTitle(body, (ress) => {
-      const data = {
-        success: true,
-        data: ress,
-      }
-      res.status(200).send(data);
-    })
+  const sql = 'SELECT `id`,`title`,`created_date` FROM `qdm174930677_db`.`xek_article` ORDER BY `created_date` DESC;'
+  db.db(sql, [], (e) => {
+    const data = {
+      success: true,
+      data: e,
+    }
+    res.status(200).send(data);
   })
 });
 
 // 获取文章内容
-router.get('/getContent', (req, res) => {
-  cheerioFunc.start(`${config.url}${req.query.url}`, (body) => {
-    analyze.findContent(body, (ress) => {
-
-      const data = {
-        success: true,
-        data: ress,
-      }
-      res.status(200).send(data);
-    })
+router.post('/getContent', (req, res) => {
+  const sql = 'SELECT * FROM `qdm174930677_db`.`xek_article` WHERE id = ? ORDER BY `created_date` DESC;'
+  db.db(sql, [req.body.id], (e) => {
+    const data = {
+      success: true,
+      data: e,
+    }
+    res.status(200).send(data);
   })
 })
-
 module.exports = router;

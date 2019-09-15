@@ -15,6 +15,7 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
+    "linebreak-style": [0 ,"error", "windows"],
     'prefer-promise-reject-errors': 0,
     'space-unary-ops': 0,
     'no-unused-expressions': 0,
