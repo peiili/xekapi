@@ -53,7 +53,9 @@ function loopGetContent() {
 }
 
 // 每一小时爬取一次
-setInterval(() => {
-  loopGetContent()
-}, 1000 * 6 * 10 * 60)
-module.exports.start = start;
+function getDomData() {
+  setInterval(() => {
+   loopGetContent()
+ }, 1000 * 6 * 10 * 60)
+}
+module.exports.start = getDomData;
