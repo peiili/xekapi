@@ -33,8 +33,8 @@ function loopGetContent() {
 
                   // 判断原数据库是否有对应的title
                   if (!reslu.length) {
-                    const insertSql = 'INSERT INTO  `qdm174930677_db`.`xek_article` (`title`,`created_date`,`content`) VALUES(?,?,?)'
-                    db.db(insertSql, [`${res.title}`, res.date[0], JSON.stringify(res.content)], (status) => {
+                    const insertSql = 'INSERT INTO  `qdm174930677_db`.`xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,?,?,?)'
+                    db.db(insertSql, [`${res.title}`, res.date[0], JSON.stringify(res.content), '1'], (status) => {
                       console.log(status);
 
                     })

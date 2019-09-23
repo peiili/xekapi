@@ -5,8 +5,10 @@ const router = express.Router()
 
 // 获取文章标题
 router.get('/getList', (req, res) => {
-  const sql = 'SELECT `id`,`title`,`created_date` FROM `qdm174930677_db`.`xek_article` ORDER BY `created_date` DESC;'
-  db.db(sql, [], (e) => {
+
+  // req type 类型
+  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `qdm174930677_db`.`xek_article` WHERE type = ? ORDER BY `created_date` DESC;'
+  db.db(sql, [req.query.type], (e) => {
     const data = {
       success: true,
       data: e,
