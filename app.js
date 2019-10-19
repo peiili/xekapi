@@ -17,7 +17,7 @@ const grabbag = require('./routes/GrabBag');
 const active = require('./routes/Active');
 
 getDomDate.start();
-app.use('/api', grabbag);
+app.use('/api/grabbag', grabbag);
 app.use('/api/active', active);
 const port = 5166
 app.listen(port, () => {
