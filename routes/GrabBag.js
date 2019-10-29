@@ -16,8 +16,11 @@ router.post('/getList', (req, res) => {
    * 每页显示条数，默认10
    */
   const {
- type, fuzzy, page, size,
-} = req.body;
+    type,
+    fuzzy,
+    page,
+    size,
+  } = req.body;
   try {
     db.db(sql, [type, `%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], (e) => {
       const data = {

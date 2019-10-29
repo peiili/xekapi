@@ -70,33 +70,42 @@ router.post('/uploadVisitorInfo', (req, res) => {
 				id: uuidv4(),
 			},
 		}
-		const sql = 'INSERT INTO `qdm174930677_db`.`xek_register` (id,active_id, name, mobile_phone,student_id,create_date) VALUES (?,?,?,?,?,NOW());'
-		const sqlArr = [data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID]
+		let openId = '';
+		getOpenId(body.code, (e) => {
+			openId = e
+		})
+		const sql = 'INSERT INTO `qdm174930677_db`.`xek_register`'
+			+	'(id,active_id, name, mobile_phone,student_id,open_id,create_date)'
+			+ 'VALUES (?,?,?,?,?,?,NOW());'
+		const sqlArr = [
+			data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID, openId]
 		db.db(sql, sqlArr, () => {
 				res.status(200).send(data)
 				const temp_id = 'YNntNqEqFqHdb5_WJ4vshh4DcRnXFGtyaXJ3ZkeUF0w';
 
-				getAccessToken((assesstoken) => {
-					getOpenId(body.code, (openId) => {
+				// 查询当前活动信息;
+				const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `qdm174930677_db`.`xek_active` WHERE id = ?;'
+				db.db(getActiveSql, [body.active.id], (e) => {
+					getAccessToken((assesstoken) => {
 
-						// TODO模板信息从接口获取
-						const keywords = {
-							keywords1: body.userName || `用户${body.mobilePhone}`,
-							keywords2: '安阳工学院学术交流中心',
-							keywords3: '2019年10月30日',
-							keywords4: moment().format('YYYY年MM月DD日'),
-						}
-						sendTemplateInfo(assesstoken, openId, temp_id, body.formId, keywords, (e) => {
-							console.log(e.body);
-							if (!JSON.parse(e.body).errcode) {
-								console.log('模板发送成功');
-
+							// TODO模板信息从接口获取
+							const keywords = {
+								keywords1: body.userName || `用户${body.mobilePhone}`,
+								keywords2: e[0].address,
+								keywords3: moment(e[0].open_date).format('YYYY年MM月DD日'),
+								keywords4: moment().format('YYYY年MM月DD日'),
 							}
+							sendTemplateInfo(assesstoken, openId, temp_id, body.formId, keywords, (j) => {
+								console.log(j.body);
+								if (!JSON.parse(j.body).errcode) {
+									console.log('模板发送成功');
+								}
 
-						})
-					})
-				});
-		})
+							})
+					});
+			})
+
+				})
 	} else {
 		const data = {
 			success: false,
