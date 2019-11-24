@@ -54,10 +54,10 @@ function loopGetContent() {
     })
 }
 
-// 每一小时爬取一次
+// 每5小时爬取一次
 function getDomData() {
   setInterval(() => {
    loopGetContent()
- }, 1000 * 6 * 10 * 60)
+ }, 1000 * 6 * 10 * 60 * 12)
 }
 module.exports.start = getDomData;

@@ -1,13 +1,13 @@
 const mysql = require('mysql');
-const config = require('./databaseConf');
+const { databaseConfig } = require('./databaseConf');
 
 // 创建连接池
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: config.host,
-  user: config.user,
-  password: config.password,
-  database: config.database,
+  host: databaseConfig.host,
+  user: databaseConfig.user,
+  password: databaseConfig.password,
+  database: databaseConfig.database,
 });
 
 /**
@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 function getDb(sql, arr, callback) {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    const query = connection.query(sql, arr, (error, results, fields) => {
+    const query = connection.query(sql, arr, (error, results) => {
       if (error) throw error;
       connection.release()
       callback(results)

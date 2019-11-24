@@ -1,10 +1,17 @@
-const host = 'qdm174930677.my3w.com';
-const user = 'qdm174930677';
-const password = 'Zzz123456';
-const datebase = 'qdm174930677_db';
+const production = {
+  host: '127.0.0.1',
+  password: 'ZZZ123456',
+  user: 'root',
+  database: 'xek',
+};
+const devs = {
+  host: '47.105.113.47',
+  password: 'ZZZ123456',
+  user: 'root',
+  database: 'xek_test',
+};
+let env = '';
+env = process.env.NODE_ENV;
 module.exports = {
-  host,
-  user,
-  password,
-  datebase,
-}
+  databaseConfig: env.trim() === 'dev' ? devs : production,
+};
