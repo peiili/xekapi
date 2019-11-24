@@ -11,7 +11,7 @@ const router = express.Router()
 router.get('/activeTitleList', (req, res) => {
 
 	// req type 类型
-	const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `qdm174930677_db`.`xek_active` WHERE type = ? ORDER BY `created_date` DESC;'
+	const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;'
 	db.db(sql, [req.query.type], (e) => {
 		const data = {
 			success: true,
@@ -23,7 +23,7 @@ router.get('/activeTitleList', (req, res) => {
 
 // 获取活动文章内容
 router.post('/activeContent', (req, res) => {
-	const sql = 'SELECT * FROM `qdm174930677_db`.`xek_active` WHERE id = ? ORDER BY `created_date` DESC;'
+	const sql = 'SELECT * FROM `xek_active` WHERE id = ? ORDER BY `created_date` DESC;'
 	db.db(sql, [req.body.id], (e) => {
 		const data = {
 			success: true,
@@ -74,7 +74,7 @@ router.post('/uploadVisitorInfo', (req, res) => {
 		getOpenId(body.code, (e) => {
 			openId = e
 		})
-		const sql = 'INSERT INTO `qdm174930677_db`.`xek_register`'
+		const sql = 'INSERT INTO `xek_register`'
 			+	'(id,active_id, name, mobile_phone,student_id,open_id,create_date)'
 			+ 'VALUES (?,?,?,?,?,?,NOW());'
 		const sqlArr = [
@@ -84,7 +84,7 @@ router.post('/uploadVisitorInfo', (req, res) => {
 				const temp_id = 'YNntNqEqFqHdb5_WJ4vshh4DcRnXFGtyaXJ3ZkeUF0w';
 
 				// 查询当前活动信息;
-				const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `qdm174930677_db`.`xek_active` WHERE id = ?;'
+				const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `xek_active` WHERE id = ?;'
 				db.db(getActiveSql, [body.active.id], (e) => {
 					getAccessToken((assesstoken) => {
 

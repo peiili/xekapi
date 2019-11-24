@@ -29,12 +29,12 @@ function loopGetContent() {
                  if (res.title) {
 
                    // 通过当前title 查询是否有历史数据
-                   const selectSql = 'SELECT * FROM `qdm174930677_db`.`xek_article` WHERE `title` = ?'
+                   const selectSql = 'SELECT * FROM `xek_article` WHERE `title` = ?'
                    db.db(selectSql, `${res.title}`, (reslu) => {
 
                      // 判断原数据库是否有对应的title
                      if (!reslu.length) {
-                       const insertSql = 'INSERT INTO  `qdm174930677_db`.`xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,?,?,?)'
+                       const insertSql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,?,?,?)'
                        db.db(insertSql, [`${res.title}`, res.date[0], JSON.stringify(res.content), '1'], (status) => {
                          console.log(status);
 

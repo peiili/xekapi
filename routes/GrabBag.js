@@ -7,7 +7,7 @@ const router = express.Router()
 router.post('/getList', (req, res) => {
 
   // req type 类型
-  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `qdm174930677_db`.`xek_article` WHERE type = ? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;'
+  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_article` WHERE type = ? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;'
 
   /**
    * 参数
@@ -41,7 +41,7 @@ router.post('/getList', (req, res) => {
 
 // 获取文章内容
 router.post('/getContent', (req, res) => {
-  const sql = 'SELECT * FROM `qdm174930677_db`.`xek_article` WHERE id = ? ORDER BY `created_date` DESC;'
+  const sql = 'SELECT * FROM `xek_article` WHERE id = ? ORDER BY `created_date` DESC;'
   db.db(sql, [req.body.id], (e) => {
     const data = {
       success: true,
