@@ -12,6 +12,7 @@ const devs = {
 };
 let env = '';
 env = process.env.NODE_ENV;
+console.log(process.env.NODE_ENV);
 module.exports = {
   databaseConfig: env.trim() === 'dev' ? devs : production,
 };

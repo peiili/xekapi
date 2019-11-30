@@ -16,11 +16,13 @@ if (process.env.NODE_ENV) {
 const grabbag = require('./routes/GrabBag');
 const active = require('./routes/Active');
 const bing = require('./routes/bing');
+const user = require('./routes/user');
 
 getDomDate.start();
 app.use('/api/grabbag', grabbag);
 app.use('/api/active', active);
 app.use('/api/bing', bing);
+app.use('/api/user', user);
 const port = 5166
 app.listen(port, () => {
   console.log(`App listening on port${port}`);
