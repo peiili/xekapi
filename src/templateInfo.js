@@ -1,26 +1,29 @@
 const request = require('request')
 
-function getAccessToken(callback) {
-  let AccessToken = '';
-  request('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wxc0e9b2d814c97c58&secret=e29c8bbdb77f8b895efb833b7c468af8', (error, e, body) => {
+const appid = 'wxc0e9b2d814c97c58';
+const secretId = '5ba9e527fd05c9d3773a60dbe850ded6';
+let accessToken = '';
+getAccessToken();
+setInterval(() => {
+  getAccessToken()
+}, 1000 * 60 * 60 * 2);
+function getAccessToken() {
+  request(`https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secretId}`, (error, e, body) => {
     if (error) throw error;
-    AccessToken = JSON.parse(body).access_token;
-    callback(AccessToken)
+    accessToken = JSON.parse(body).access_token;
   })
 }
 
 function getOpenId(code, callback) {
-  const secretId = 'e29c8bbdb77f8b895efb833b7c468af8';
-  const appid = 'wxc0e9b2d814c97c58';
   request(`https://api.weixin.qq.com/sns/jscode2session?appid=${appid}&secret=${secretId}&js_code=${code}&grant_type=authorization_code`, (err, e, body) => {
     if (err) throw err;
     callback(JSON.parse(body).openid)
   })
 }
 
-function sendTemplateInfo(AccessTokens, openId, templateId, formID, keywords, callabck) {
+function sendTemplateInfo(openId, templateId, formID, keywords, callabck) {
   request({
-      url: `https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${AccessTokens}`,
+      url: `https://api.weixin.qq.com/cgi-bin/message/wxopen/template/send?access_token=${accessToken}`,
       method: 'POST',
       headers: {
         'content-type': 'application/json',
@@ -55,6 +58,10 @@ function sendTemplateInfo(AccessTokens, openId, templateId, formID, keywords, ca
       callabck(res)
     })
 }
-module.exports.getAccessToken = getAccessToken;
-module.exports.getOpenId = getOpenId;
-module.exports.sendTemplateInfo = sendTemplateInfo;
+
+module.exports = {
+  getAccessToken,
+  getOpenId,
+  sendTemplateInfo,
+
+}

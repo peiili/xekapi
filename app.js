@@ -25,5 +25,5 @@ app.use('/api/bing', bing);
 app.use('/api/user', user);
 const port = 5166
 app.listen(port, () => {
-  console.log(`App listening on port${port}`);
+  console.log(`App listening on port ${port}`);
 });

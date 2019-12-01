@@ -86,7 +86,6 @@ router.post('/uploadVisitorInfo', (req, res) => {
 				// 查询当前活动信息;
 				const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `xek_active` WHERE id = ?;'
 				db.db(getActiveSql, [body.active.id], (e) => {
-					getAccessToken((assesstoken) => {
 
 							// TODO模板信息从接口获取
 							const keywords = {
@@ -95,14 +94,13 @@ router.post('/uploadVisitorInfo', (req, res) => {
 								keywords3: moment(e[0].open_date).format('YYYY年MM月DD日'),
 								keywords4: moment().format('YYYY年MM月DD日'),
 							}
-							sendTemplateInfo(assesstoken, openId, temp_id, body.formId, keywords, (j) => {
+							sendTemplateInfo(openId, temp_id, body.formId, keywords, (j) => {
 								console.log(j.body);
 								if (!JSON.parse(j.body).errcode) {
 									console.log('模板发送成功');
 								}
 
 							})
-					});
 			})
 
 				})
