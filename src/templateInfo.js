@@ -29,7 +29,7 @@ function sendTemplateInfo(openId, templateId, formID, keywords, callabck) {
         'content-type': 'application/json',
       },
       body: JSON.stringify({
-        access_token: AccessTokens,
+        access_token: accessToken,
         touser: openId,
         template_id: templateId,
         form_id: formID,
