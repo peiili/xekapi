@@ -1,7 +1,7 @@
 const express = require('express')
 const db = require('../database/connection');
 
-const { getOpenId, getPaidUnionId } = require('../src/templateInfo');
+const { getOpenId } = require('../src/templateInfo');
 
 const router = express.Router()
 
@@ -10,7 +10,7 @@ const router = express.Router()
  */
 
  router.get('/getUnionId/*', (req, res) => {
-   getOpenId(req.params[0], (openId) => {
+   getOpenId(req.params['0'], (openId) => {
     console.log(openId);
     res.status(200).send({
       data: {
@@ -62,4 +62,13 @@ router.get('/feedback', (req, res) => {
   })
 })
 
+// 使用openId获取当前用户的报名列表
+router.get('/userRegistre/*', (req, res) => {
+  getOpenId(req.params['0'], (openid) => {
+    const sql = 'SELECT * FROM xek_register WHERE open_id = ?'
+    db.db(sql, [openid], (arr) => {
+      res.status(200).send(arr);
+    })
+  })
+})
 module.exports = router
