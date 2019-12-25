@@ -73,37 +73,37 @@ router.post('/uploadVisitorInfo', (req, res) => {
 		let openId = '';
 		getOpenId(body.code, (e) => {
 			openId = e
-		})
-		const sql = 'INSERT INTO `xek_register`'
-			+	'(id,active_id, name, mobile_phone,student_id,open_id,create_date)'
-			+ 'VALUES (?,?,?,?,?,?,NOW());'
-		const sqlArr = [
-			data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID, openId]
-		db.db(sql, sqlArr, () => {
-				res.status(200).send(data)
-				const temp_id = 'YNntNqEqFqHdb5_WJ4vshh4DcRnXFGtyaXJ3ZkeUF0w';
+			const sql = 'INSERT INTO `xek_register`'
+				+	'(id,active_id, name, mobile_phone,student_id,open_id,create_date)'
+				+ 'VALUES (?,?,?,?,?,?,NOW());'
+			const sqlArr = [
+				data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID, openId]
+			db.db(sql, sqlArr, () => {
+					res.status(200).send(data)
+					const temp_id = 'YNntNqEqFqHdb5_WJ4vshh4DcRnXFGtyaXJ3ZkeUF0w';
 
-				// 查询当前活动信息;
-				const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `xek_active` WHERE id = ?;'
-				db.db(getActiveSql, [body.active.id], (e) => {
+					// 查询当前活动信息;
+					const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `xek_active` WHERE id = ?;'
+					db.db(getActiveSql, [body.active.id], (resp) => {
 
-							// TODO模板信息从接口获取
-							const keywords = {
-								keywords1: body.userName || `用户${body.mobilePhone}`,
-								keywords2: e[0].address,
-								keywords3: moment(e[0].open_date).format('YYYY年MM月DD日'),
-								keywords4: moment().format('YYYY年MM月DD日'),
-							}
-							sendTemplateInfo(openId, temp_id, body.formId, keywords, (j) => {
-								console.log(j.body);
-								if (!JSON.parse(j.body).errcode) {
-									console.log('模板发送成功');
+								// TODO模板信息从接口获取
+								const keywords = {
+									keywords1: body.userName || `用户${body.mobilePhone}`,
+									keywords2: resp[0].address,
+									keywords3: moment(resp[0].open_date).format('YYYY年MM月DD日'),
+									keywords4: moment().format('YYYY年MM月DD日'),
 								}
+								sendTemplateInfo(openId, temp_id, body.formId, keywords, (j) => {
+									console.log(j.body);
+									if (!JSON.parse(j.body).errcode) {
+										console.log('模板发送成功');
+									}
 
-							})
-			})
-
+								})
 				})
+
+					})
+		})
 	} else {
 		const data = {
 			success: false,

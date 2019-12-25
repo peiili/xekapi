@@ -1,7 +1,7 @@
 const express = require('express')
 const db = require('../database/connection');
 
-const { getOpenId, getPaidUnionId } = require('../src/templateInfo');
+const { getOpenId } = require('../src/templateInfo');
 
 const router = express.Router()
 
@@ -62,4 +62,19 @@ router.get('/feedback', (req, res) => {
   })
 })
 
+/**
+ * 获取当前user所参与的活动
+ * userId
+ */
+router.get('/registerAll/*', (req, res) => {
+  const userId = req.params[0]
+  const sql = 'SELECT xek_register.id,xek_active.title,xek_active.open_date FROM xek_register LEFT JOIN xek_active on xek_register.active_id = xek_active.id WHERE open_id = ?';
+  db.db(sql, [userId], (e) => {
+    const data = {
+      success: true,
+      data: e,
+    };
+    res.send(data)
+  })
+})
 module.exports = router

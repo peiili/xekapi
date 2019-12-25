@@ -47,5 +47,4 @@ function findTitle(dom, callback) {
     callback(contentData);
   }
 
-module.exports.findTitle = findTitle;
-module.exports.findContent = findContent;
+module.exports = { findTitle, findContent }
