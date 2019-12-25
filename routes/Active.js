@@ -3,7 +3,7 @@ const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
 const db = require('../database/connection');
-const { getAccessToken, getOpenId, sendTemplateInfo } = require('../src/templateInfo');
+const { getOpenId, sendTemplateInfo } = require('../src/templateInfo');
 
 const router = express.Router()
 

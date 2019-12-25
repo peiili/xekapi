@@ -10,7 +10,7 @@ const router = express.Router()
  */
 
  router.get('/getUnionId/*', (req, res) => {
-   getOpenId(req.params[0], (openId) => {
+   getOpenId(req.params['0'], (openId) => {
     console.log(openId);
     res.status(200).send({
       data: {
@@ -75,6 +75,16 @@ router.get('/registerAll/*', (req, res) => {
       data: e,
     };
     res.send(data)
+  })
+})
+
+// 使用openId获取当前用户的报名列表
+router.get('/userRegistre/*', (req, res) => {
+  getOpenId(req.params['0'], (openid) => {
+    const sql = 'SELECT * FROM xek_register WHERE open_id = ?'
+    db.db(sql, [openid], (arr) => {
+      res.status(200).send(arr);
+    })
   })
 })
 module.exports = router
