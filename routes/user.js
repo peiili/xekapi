@@ -1,7 +1,9 @@
 const express = require('express')
 const db = require('../database/connection');
 
-const { getOpenId } = require('../src/templateInfo');
+const {
+  getOpenId,
+} = require('../src/templateInfo');
 
 const router = express.Router()
 
@@ -9,27 +11,27 @@ const router = express.Router()
  * 获取用户unionId
  */
 
- router.get('/getUnionId/*', (req, res) => {
-   getOpenId(req.params['0'], (openId) => {
+router.get('/getUnionId/*', (req, res) => {
+  getOpenId(req.params['0'], (openId) => {
     console.log(openId);
     res.status(200).send({
       data: {
         openId,
       },
     })
-   })
+  })
 
   // getOpenId(req)
- })
+})
 
 /**
  *   提交 反馈
  */
 router.post('/feedback', (req, res) => {
-    console.log(req.body)
-    const sql = 'INSERT INTO xek_feedback (open_id,feedback,created_date) VALUES (?,?,NOW())'
-    db.db(sql, [req.body.openId, req.body.feedback], () => {
- const data = {
+  console.log(req.body)
+  const sql = 'INSERT INTO xek_feedback (open_id,feedback,created_date) VALUES (?,?,NOW())'
+  db.db(sql, [req.body.openId, req.body.feedback], () => {
+    const data = {
       success: true,
       data: {
         createdDate: new Date(),
@@ -37,7 +39,7 @@ router.post('/feedback', (req, res) => {
       },
     }
     res.status(200).send(data);
-    })
+  })
 })
 
 /**
@@ -47,9 +49,9 @@ router.get('/feedback', (req, res) => {
   let sql = '';
   console.log(req.query)
   if (req.query.openId) {
-     sql = `SELECT * FROM xek_feedback WHERE open_id = ${req.query.openId}`
+    sql = `SELECT * FROM xek_feedback WHERE open_id = ${req.query.openId}`
   } else {
-     sql = `SELECT * FROM xek_feedback WHERE status = '${req.query.status}'`
+    sql = `SELECT * FROM xek_feedback WHERE status = '${req.query.status}'`
   }
   db.db(sql, [], (e) => {
     console.log(e);
@@ -67,14 +69,16 @@ router.get('/feedback', (req, res) => {
  * userId
  */
 router.get('/registerAll/*', (req, res) => {
-  const userId = req.params[0]
-  const sql = 'SELECT xek_register.id,xek_active.title,xek_active.open_date FROM xek_register LEFT JOIN xek_active on xek_register.active_id = xek_active.id WHERE open_id = ?';
-  db.db(sql, [userId], (e) => {
-    const data = {
-      success: true,
-      data: e,
-    };
-    res.send(data)
+  getOpenId(req.params[0], (openid) => {
+    const sql = 'SELECT xek_register.id,xek_active.title,xek_active.open_date FROM xek_register LEFT JOIN xek_active on xek_register.active_id = xek_active.id WHERE open_id = ?';
+    db.db(sql, [openid], (e) => {
+      const data = {
+        success: true,
+        data: e,
+      };
+      res.send(data)
+    })
+
   })
 })
 
