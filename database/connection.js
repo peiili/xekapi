@@ -7,7 +7,7 @@ const pool = mysql.createPool({
   host: databaseConfig.host,
   user: databaseConfig.user,
   password: databaseConfig.password,
-  database: databaseConfig.database,
+  database: databaseConfig.database
 });
 
 /**
@@ -20,13 +20,13 @@ function getDb(sql, arr, callback) {
     if (err) throw err;
     const query = connection.query(sql, arr, (error, results) => {
       if (error) throw error;
-      connection.release()
-      callback(results)
+      connection.release();
+      callback(results);
     });
 
     // 打印sql
     console.log(query.sql);
-  })
+  });
 }
 
 module.exports.db = getDb;
