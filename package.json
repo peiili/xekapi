@@ -7,7 +7,7 @@
     "dev": "export NODE_ENV=dev && nodemon app.js",
     "start": "set NODE_ENV=dev && node app.js",
     "remote_start": "set NODE_ENV=remote && node app.js",
-    "proStart": "export NODE_ENV=production && node app.js",
+    "proStart": "export NODE_ENV=production && pm2 start app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yhl",
@@ -20,7 +20,9 @@
     "moment": "^2.24.0",
     "mongoose": "^4.13.20",
     "morgan": "^1.9.1",
+    "multer": "^1.4.2",
     "mysql": "^2.17.1",
+    "qiniu": "^7.3.0",
     "request": "^2.88.0",
     "uuid": "^3.3.3"
   },

@@ -99,13 +99,13 @@ router.post('/login', (req, res) => {
   };
   db.db(sql, [schema.pass_word, schema.accept], arr => {
     let data = {};
-    const token = jwt.sign(
-      {
-        id: arr[0].id
-      },
-      'jwttoken'
-    );
     if (arr.length) {
+      const token = jwt.sign(
+        {
+          id: arr[0].id
+        },
+        'jwttoken'
+      );
       data = {
         success: true,
         message: '登录成功',
