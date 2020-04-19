@@ -1,7 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const db = require('../database/connection');
-const { getOpenId } = require('../src/templateInfo');
+const { getOpenId } = require('../templateInfo');
 
 const router = express.Router();
 

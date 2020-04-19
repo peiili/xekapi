@@ -3,15 +3,15 @@ const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
 const db = require('../database/connection');
-const { getOpenId, sendTemplateInfo } = require('../src/templateInfo');
+
+const { getOpenId, sendTemplateInfo } = require('../templateInfo');
 
 const router = express.Router();
 
 // 获取文章标题
 router.get('/activeTitleList', (req, res) => {
   // req type 类型
-  const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
+  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
   db.db(sql, [req.query.type], e => {
     const data = {
       success: true,
@@ -74,8 +74,9 @@ router.post('/uploadVisitorInfo', (req, res) => {
     let openId = '';
     getOpenId(body.code, e => {
       openId = e;
-      const sql =
-        'INSERT INTO `xek_register` (id,active_id, name, mobile_phone,student_id,open_id,create_date) VALUES (?,?,?,?,?,?,NOW());';
+      const sql = `INSERT INTO xek_register
+         (id,active_id, name, mobile_phone,student_id,open_id,create_date) VALUES (?,?,?,?,?,?,NOW());`;
+      // eslint-disable-next-line max-len
       const sqlArr = [data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID, openId];
       db.db(sql, sqlArr, () => {
         res.status(200).send(data);
@@ -109,5 +110,21 @@ router.post('/uploadVisitorInfo', (req, res) => {
     };
     res.status(200).send(data);
   }
+});
+
+/**
+ *
+ * @param {*} params
+ */
+
+router.post('/createActive', (req, res) => {
+  console.log(req.body);
+  const sql = `INSERT INTO xek_active (id,title,created_date,source,type,desc,address,open_date)
+  VALUES
+    (?,?,NOW(),?,?,?,?,?)`;
+  db.db(sql, [], e => {
+    console.log(e);
+    res.status(200).send({});
+  });
 });
 module.exports = router;

@@ -1,12 +1,10 @@
 // 附件上传， from
 const express = require('express');
 const multer = require('multer');
-const fs = require('fs');
 
-const putStream = require('./../src/control/qiniu');
+const putStream = require('../control/qiniu');
 
 const router = express.Router();
-const db = require('../database/connection');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {

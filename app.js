@@ -31,11 +31,11 @@ if (process.env.NODE_ENV) {
 //   }
 // });
 
-const grabbag = require('./routes/GrabBag');
-const active = require('./routes/Active');
-const bing = require('./routes/bing');
-const user = require('./routes/user');
-const attachment = require('./routes/attachment');
+const grabbag = require('./src/models/GrabBag');
+const active = require('./src/models/Active');
+const bing = require('./src/models/bing');
+const user = require('./src/models/user');
+const attachment = require('./src/models/attachment');
 
 getDomDate.start();
 app.use('/api/grabbag', grabbag);

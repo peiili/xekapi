@@ -1,24 +1,26 @@
 {
-    "printWidth":120, 
-    "tabWidth": 2, 
-    "useTabs": false, 
-    "singleQuote": true,
-    "semi": true, 
-    "trailingComma": "none", 
-    "bracketSpacing": true, 
-    "parser": "babylon",
-    "overrides": [
-        {
-          "files": "*.test.js",
-          "options": {
-            "semi": true
-          }
-        },
-        {
-          "files": ["*.html", "legacy/**/*.js"],
-          "options": {
-            "tabWidth": 4
-          }
-        }
-      ]
+  "printWidth": 140,
+  "tabWidth": 2,
+  "useTabs": false,
+  "singleQuote": true,
+  "semi": true,
+  "trailingComma": "none",
+  "bracketSpacing": true,
+  "overrides": [
+    {
+      "files": "*.test.js",
+      "options": {
+        "semi": true
+      }
+    },
+    {
+      "files": [
+        "*.html",
+        "legacy/**/*.js"
+      ],
+      "options": {
+        "tabWidth": 4
+      }
+    }
+  ]
 }
