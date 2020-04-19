@@ -20,3 +20,4 @@
 [0mPOST /api/active/createActive [32m200 [0m287.275 ms - 153[0m
 [0mPOST /api/active/createActive [32m200 [0m265.951 ms - 147[0m
 [0mGET /api/active/activeTitleList?type=2 [32m200 [0m268.465 ms - 990[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m270.743 ms - 990[0m

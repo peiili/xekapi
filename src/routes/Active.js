@@ -25,7 +25,6 @@ router.get('/activeTitleList', (req, res) => {
 router.post('/activeContent', (req, res) => {
   const sql = 'SELECT * FROM `xek_active` WHERE id = ? ORDER BY `created_date` DESC;';
   db.db(sql, [req.body.id], e => {
-    e.desc = e.description;
     const data = {
       success: true,
       data: e
