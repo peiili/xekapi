@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const morgan = require('morgan');
 const express = require('express');
 const process = require('process');
@@ -7,10 +9,11 @@ const getDomDate = require('./src/cheerio');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
 if (process.env.NODE_ENV) {
-  app.use(morgan('dev'));
+  app.use(morgan('dev', { stream: accessLogStream }));
 } else {
-  app.use(morgan('short'));
+  app.use(morgan('common', { stream: accessLogStream }));
 }
 
 // app.all('*', (req, res, next) => {
@@ -31,11 +34,11 @@ if (process.env.NODE_ENV) {
 //   }
 // });
 
-const grabbag = require('./src/models/GrabBag');
-const active = require('./src/models/Active');
-const bing = require('./src/models/bing');
-const user = require('./src/models/user');
-const attachment = require('./src/models/attachment');
+const grabbag = require('./src/routes/GrabBag');
+const active = require('./src/routes/Active');
+const bing = require('./src/routes/bing');
+const user = require('./src/routes/user');
+const attachment = require('./src/routes/attachment');
 
 getDomDate.start();
 app.use('/api/grabbag', grabbag);

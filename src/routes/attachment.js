@@ -2,7 +2,7 @@
 const express = require('express');
 const multer = require('multer');
 
-const putStream = require('../control/qiniu');
+const putStream = require('../controllers/qiniu');
 
 const router = express.Router();
 

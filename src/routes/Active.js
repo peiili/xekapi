@@ -57,7 +57,6 @@ router.post('/getAuditCode', (req, res) => {
 
 // 提交活动报名信息
 router.post('/uploadVisitorInfo', (req, res) => {
-  // 验证验证码的有效性
   if (req.body.auditCode == tempCode[req.body.mobilePhone] || req.body.auditCode === '1212') {
     if (req.body.auditCode === '1212') {
       console.log('使用万能验证码登陆');
