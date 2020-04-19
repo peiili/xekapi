@@ -6,7 +6,7 @@ const router = express.Router();
 // 获取文章标题
 router.post('/getList', (req, res) => {
   const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_article` WHERE type = ? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
+    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description` FROM `xek_article` WHERE type = ? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
 
   /**
    * 参数

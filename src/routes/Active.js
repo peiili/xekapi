@@ -11,7 +11,7 @@ const router = express.Router();
 // 获取文章标题
 router.get('/activeTitleList', (req, res) => {
   // req type 类型
-  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`desc` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
+  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`description` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
   db.db(sql, [req.query.type], e => {
     const data = {
       success: true,
@@ -25,6 +25,7 @@ router.get('/activeTitleList', (req, res) => {
 router.post('/activeContent', (req, res) => {
   const sql = 'SELECT * FROM `xek_active` WHERE id = ? ORDER BY `created_date` DESC;';
   db.db(sql, [req.body.id], e => {
+    e.desc = e.description;
     const data = {
       success: true,
       data: e
@@ -117,13 +118,16 @@ router.post('/uploadVisitorInfo', (req, res) => {
  */
 
 router.post('/createActive', (req, res) => {
-  console.log(req.body);
-  const sql = `INSERT INTO xek_active (id,title,created_date,source,type,desc,address,open_date)
+  // eslint-disable-next-line object-curly-newline
+  const { title, type, description, address, content } = req.body;
+  const open_date = req.body.openDate;
+  const body = [title, type, description, address, open_date, content];
+  const sql = `INSERT INTO xek_active (title,type,description,address,open_date,content,created_date)
   VALUES
-    (?,?,NOW(),?,?,?,?,?)`;
-  db.db(sql, [], e => {
+    (?,?,?,?,?,?,NOW())`;
+  db.db(sql, body, e => {
     console.log(e);
-    res.status(200).send({});
+    res.status(200).send({ success: true, data: req.body });
   });
 });
 module.exports = router;

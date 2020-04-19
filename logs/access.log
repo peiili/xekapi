@@ -1,3 +1,22 @@
 [0mGET /api/active/activeTitleList?type=2 [32m200 [0m246.339 ms - 642[0m
 ::ffff:127.0.0.1 - GET /api/active/activeTitleList?type=2 HTTP/1.1 304 - - 256.845 ms
 ::ffff:127.0.0.1 - - [19/Apr/2020:16:57:46 +0000] "GET /api/active/activeTitleList?type=2 HTTP/1.1" 304 -
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m245.299 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m123.230 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m150.319 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m122.700 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m114.118 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m117.070 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m122.720 ms - -[0m
+[0mGET /api/active/activeTitleList?type=2 [36m304 [0m110.192 ms - -[0m
+[0mPOST /api/active/createActive [0m- [0m- ms - -[0m
+[0mPOST /api/active/createActive [31m500 [0m6.708 ms - 1283[0m
+[0mPOST /api/active/createActive [32m200 [0m6.617 ms - -[0m
+[0mPOST /api/active/createActive [32m200 [0m5.823 ms - 5[0m
+[0mPOST /api/active/createActive [32m200 [0m5.674 ms - 5[0m
+[0mPOST /api/active/createActive [32m200 [0m15.744 ms - 5[0m
+[0mPOST /api/active/createActive [32m200 [0m7.917 ms - 5[0m
+[0mPOST /api/active/createActive [32m200 [0m6.468 ms - 5[0m
+[0mPOST /api/active/createActive [32m200 [0m287.275 ms - 153[0m
+[0mPOST /api/active/createActive [32m200 [0m265.951 ms - 147[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m268.465 ms - 990[0m
