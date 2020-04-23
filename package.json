@@ -4,8 +4,8 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "dev": "export NODE_ENV=dev && nodemon app.js",
-    "start": "set NODE_ENV=dev && node app.js",
+    "dev": "export NODE_ENV=development && nodemon app.js",
+    "start": "set NODE_ENV=development && node app.js",
     "remote_start": "set NODE_ENV=remote && node app.js",
     "proStart": "export NODE_ENV=production && pm2 start app.js",
     "test": "echo \"Error: no test specified\" && exit 1"

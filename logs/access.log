@@ -21,3 +21,7 @@
 [0mPOST /api/active/createActive [32m200 [0m265.951 ms - 147[0m
 [0mGET /api/active/activeTitleList?type=2 [32m200 [0m268.465 ms - 990[0m
 [0mGET /api/active/activeTitleList?type=2 [32m200 [0m270.743 ms - 990[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m248.055 ms - 990[0m
+[0mGET /api/user/getUnionId/033ugFWx0JOFne1zr5Xx0Z7jWx0ugFWs [32m200 [0m315.563 ms - 50[0m
+[0mGET /api/bing/randomBingList?limit=3 [32m200 [0m242.201 ms - 668[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m233.190 ms - 990[0m
