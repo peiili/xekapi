@@ -5,6 +5,7 @@ const moment = require('moment');
 const db = require('../database/connection');
 
 const { getOpenId, sendTemplateInfo } = require('../templateInfo');
+const { activeType } = require('../controllers/enums');
 
 const router = express.Router();
 
@@ -111,11 +112,6 @@ router.post('/uploadVisitorInfo', (req, res) => {
   }
 });
 
-/**
- *
- * @param {*} params
- */
-
 router.post('/createActive', (req, res) => {
   // eslint-disable-next-line object-curly-newline
   const { title, type, description, address, content } = req.body;
@@ -125,6 +121,17 @@ router.post('/createActive', (req, res) => {
   VALUES
     (?,?,?,?,?,?,NOW())`;
   db.db(sql, body, e => {
+    console.log(e);
+    res.status(200).send({ success: true, data: req.body });
+  });
+});
+
+// 删除活动信息
+router.put('/delActive', (req, res) => {
+  const { id } = req.body;
+  const type = activeType[req.body.type].key;
+  const sql = 'update xek_active set type=? where id=?';
+  db.db(sql, [type, id], e => {
     console.log(e);
     res.status(200).send({ success: true, data: req.body });
   });
