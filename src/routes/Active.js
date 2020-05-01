@@ -131,8 +131,7 @@ router.put('/delActive', (req, res) => {
   const { id } = req.body;
   const type = activeType[req.body.type].key;
   const sql = 'update xek_active set type=? where id=?';
-  db.db(sql, [type, id], e => {
-    console.log(e);
+  db.db(sql, [type, id], () => {
     res.status(200).send({ success: true, data: req.body });
   });
 });

@@ -4,15 +4,15 @@ const production = {
   user: 'root',
   database: 'xek'
 };
+console.log(`password:${process.env.DB_PASSWORD}`);
 const devs = {
   host: '47.105.113.47',
-  password: process.env.DB_PASSWORD,
+  password: 'ZZZ123456',
   user: 'root',
   database: 'xek_test'
 };
 let env = '';
 env = process.env.NODE_ENV;
-console.log(process.env.NODE_ENV);
 module.exports = {
   databaseConfig: env.trim() === 'development' ? devs : production
 };

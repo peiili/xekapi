@@ -25,3 +25,15 @@
 [0mGET /api/user/getUnionId/033ugFWx0JOFne1zr5Xx0Z7jWx0ugFWs [32m200 [0m315.563 ms - 50[0m
 [0mGET /api/bing/randomBingList?limit=3 [32m200 [0m242.201 ms - 668[0m
 [0mGET /api/active/activeTitleList?type=2 [32m200 [0m233.190 ms - 990[0m
+[0mPUT /api/active/delActive [32m200 [0m264.243 ms - 52[0m
+[0mPUT /api/active/delActive [32m200 [0m259.303 ms - 52[0m
+[0mPUT /api/active/delActive [32m200 [0m122.528 ms - 52[0m
+[0mGET /api/user/getUnionId/023MTBZg0QV3ft1YgSXg0RNuZg0MTBZ- [32m200 [0m309.821 ms - 50[0m
+[0mGET /api/bing/randomBingList?limit=3 [32m200 [0m137.054 ms - 685[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m221.132 ms - 911[0m
+[0mPOST /api/active/activeContent [32m200 [0m120.332 ms - 3971[0m
+[0mGET /api/bing/randomBingList?limit=3 [32m200 [0m125.809 ms - 698[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m133.645 ms - 911[0m
+[0mPOST /api/active/activeContent [32m200 [0m110.287 ms - 3971[0m
+[0mGET /api/active/activeTitleList?type=2 [32m200 [0m109.548 ms - 911[0m
+[0mGET /api/bing/randomBingList?limit=3 [32m200 [0m137.846 ms - 637[0m

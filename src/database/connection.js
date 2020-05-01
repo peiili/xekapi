@@ -2,6 +2,7 @@ const mysql = require('mysql');
 const { databaseConfig } = require('./databaseConf');
 
 // 创建连接池
+console.log('123123');
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: databaseConfig.host,
