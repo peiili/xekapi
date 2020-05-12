@@ -12,7 +12,8 @@ const router = express.Router();
 // 获取文章标题
 router.get('/activeTitleList', (req, res) => {
   // req type 类型
-  const sql = 'SELECT `id`,`title`,`created_date`,`thumbnail`,`description` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
+  const sql =
+    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`content` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
   db.db(sql, [req.query.type], e => {
     const data = {
       success: true,
