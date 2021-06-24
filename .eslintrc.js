@@ -1,7 +1,7 @@
 module.exports = {
   env: {
     browser: true,
-    es6: true
+    es6: false
   },
   extends: ['airbnb-base'],
   plugins: ['prettier'],
@@ -10,11 +10,10 @@ module.exports = {
     SharedArrayBuffer: 'readonly'
   },
   parserOptions: {
-    ecmaVersion: 2018,
+    ecmaVersion: 2015,
     sourceType: 'module'
   },
   rules: {
-    'prettier/prettier': 'error',
     'linebreak-style': [0, 'error', 'windows'],
     'prefer-promise-reject-errors': 0,
     'space-unary-ops': 0,
@@ -25,6 +24,7 @@ module.exports = {
     'import/export': 0,
     'no-mixed-operators': 0,
     'no-use-before-define': 0,
+    'object-curly-spacing':false,
     'comma-dangle': [
       'error',
       {
