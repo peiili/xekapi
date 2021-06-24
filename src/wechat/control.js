@@ -1,7 +1,7 @@
 const request = require('request');
 
-const appid = 'wxf76889c1d1208b4f';
-const secret = 'e6b87d38b76518cea5fc58d8c58c0040';
+const appid = '';
+const secret = '';
 // eslint-disable-next-line import/prefer-default-export
 
 function getAccessToken(callback) {
