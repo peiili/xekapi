@@ -94,7 +94,10 @@ function getNumber(callback){
     }
   }, (err, res, body) => {
     if (!err && res) {
-      callback(body);
+      if(body){
+        callback(body);
+
+      }
 
     } else {
       console.log(err);
