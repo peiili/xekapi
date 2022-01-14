@@ -43,4 +43,15 @@ router.post('/getContent', (req, res) => {
     res.status(200).send(data);
   });
 });
+// 写入文章内容
+router.post('/addContent', (req, res) => {
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,?,?,?)';
+  db.db(sql,[req.body.title, req.body.date, req.body.content, req.body.type], success => {
+    const data = {
+      success: success,
+      data: true
+    };
+    res.status(200).send(data);
+  });
+});
 module.exports = router;
