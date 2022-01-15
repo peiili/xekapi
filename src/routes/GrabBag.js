@@ -45,10 +45,10 @@ router.post('/getContent', (req, res) => {
 });
 // 写入文章内容
 router.post('/addContent', (req, res) => {
-  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,?,?,?)';
-  db.db(sql,[req.body.title, req.body.date, req.body.content, req.body.type], success => {
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,NOW(),?,?)';
+  db.db(sql,[req.body.title,req.body.content, req.body.type], success => {
     const data = {
-      success: success,
+      success: true,
       data: true
     };
     res.status(200).send(data);
