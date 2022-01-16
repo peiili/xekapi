@@ -2,7 +2,7 @@ const mysql = require('mysql');
 const { databaseConfig } = require('./databaseConf');
 
 // 创建连接池
-console.log('123123');
+
 const pool = mysql.createPool({
   connectionLimit: 10,
   host: databaseConfig.host,
@@ -21,6 +21,7 @@ function getDb(sql, arr, callback) {
     if (err) throw err;
     const query = connection.query(sql, arr, (error, results) => {
       if (error) throw error;
+      console.log('connect success');
       connection.release();
       callback(results);
     });

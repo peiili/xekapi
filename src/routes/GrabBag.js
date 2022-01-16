@@ -45,8 +45,19 @@ router.post('/getContent', (req, res) => {
 });
 // 写入文章内容
 router.post('/addContent', (req, res) => {
-  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`type`) VALUES(?,NOW(),?,?)';
-  db.db(sql,[req.body.title,req.body.content, req.body.type], success => {
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`description`,`type`) VALUES(?,NOW(),?,?,?)';
+  db.db(sql,[req.body.title,req.body.content,req.body.description, req.body.type], success => {
+    const data = {
+      success: true,
+      data: true
+    };
+    res.status(200).send(data);
+  });
+});
+// 更新文章内容
+router.put('/putContent', (req, res) => {
+  const sql = 'UPDATE `xek_article` SET title=?,content=?,description=?,created_date=NOW() WHERE `id`=?';
+  db.db(sql,[req.body.title,req.body.content,req.body.description,req.body.id], success => {
     const data = {
       success: true,
       data: true
