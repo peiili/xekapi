@@ -1,6 +1,6 @@
 const express = require('express');
 const db = require('../database/connection');
-
+const enums = require('../controllers//enums')
 const router = express.Router();
 
 // 获取文章标题
@@ -16,10 +16,20 @@ router.post('/getList', (req, res) => {
    */
   const { type, fuzzy, page, size } = req.body;
   try {
+    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=?'
+    let count = ''
+    db.db(countSql,[type],e=>{
+      count = e[0]['COUNT(id)']
+    })
     db.db(sql, [type, `%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
       const data = {
         success: true,
-        data: e
+        data: {
+          currentPage:page,
+          total:Math.ceil(count/Number(size)),
+          count,
+          list:e,
+        }
       };
       res.status(200).send(data);
     });
@@ -58,6 +68,17 @@ router.post('/addContent', (req, res) => {
 router.put('/putContent', (req, res) => {
   const sql = 'UPDATE `xek_article` SET title=?,content=?,description=?,created_date=NOW() WHERE `id`=?';
   db.db(sql,[req.body.title,req.body.content,req.body.description,req.body.id], success => {
+    const data = {
+      success: true,
+      data: true
+    };
+    res.status(200).send(data);
+  });
+});
+// 删除文章文章内容
+router.delete('/delContent', (req, res) => {
+  const sql = 'UPDATE `xek_article` SET `type`=? WHERE `id`=?';
+  db.db(sql,[enums.articleType.DELBLOG.key,req.query.id], success => {
     const data = {
       success: true,
       data: true
