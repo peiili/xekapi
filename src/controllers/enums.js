@@ -8,5 +8,9 @@ module.exports = {
     INIT: { label: '校园活动', key: 1, value: 'init' },
     BLOG: { label: '活动文章', key: 2, value: 'BLOG' },
     DELBLOG: { label: '已删除的文章', key: 99, value: 'DELBLOG' }
+  },
+  articleStatus: {
+    INIT: { label: '有效', key: 1, value: 'init' },
+    DELETED: { label: '已删除', key: 0, value: 'DELETED' },
   }
 };
