@@ -16,9 +16,9 @@ router.post('/getList', (req, res) => {
    */
   const { type, status,fuzzy, page, size } = req.body;
   try {
-    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=?'
+    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=?'
     let count = ''
-    db.db(countSql,[type],e=>{
+    db.db(countSql,[type,'1'],e=>{
       count = e[0]['COUNT(id)']
     })
     db.db(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
