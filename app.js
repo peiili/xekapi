@@ -36,14 +36,14 @@ if (process.env.NODE_ENV) {
 
 const grabbag = require('./src/routes/GrabBag');
 const active = require('./src/routes/Active');
-const bing = require('./src/routes/bing');
+const Bing = require('./src/routes/Bing');
 const user = require('./src/routes/user');
 const attachment = require('./src/routes/attachment');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
 app.use('/api/active', active);
-app.use('/api/bing', bing);
+app.use('/api/bing', Bing);
 app.use('/api/user', user);
 app.use('/api/attachment', attachment);
 const port = 5166;
