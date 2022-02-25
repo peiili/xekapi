@@ -36,7 +36,7 @@ if (process.env.NODE_ENV) {
 
 const grabbag = require('./src/routes/GrabBag');
 const active = require('./src/routes/Active');
-const Bing = require('./src/routes/Bing');
+const Bing = require('./src/routes/bing');
 const user = require('./src/routes/user');
 const attachment = require('./src/routes/attachment');
 // 爬虫
