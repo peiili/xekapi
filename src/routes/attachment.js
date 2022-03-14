@@ -1,13 +1,16 @@
 // 附件上传， form
 const express = require('express');
+const fs = require('fs')
+const moment = require('moment')
 const db = require('../database/connection');
 const multer = require('multer');
-const fs = require('fs')
 const {putStream,formStreams} = require('../controllers/qiniu');
 
 const router = express.Router();
 
-const {response,errorMsg} = require('../controllers/reponsecontroller')
+const {response,errorMsg} = require('../controllers/reponsecontroller');
+
+
 
 const storage = multer.diskStorage({
   destination (req, file, cb) {
@@ -50,7 +53,8 @@ router.post('/', upload.single('image'), (req, res) => {
   res.send();
 });
 router.post('/uploader', upload.single('file'), (req, res) => {
-  const key = `typeset/${req.file.originalname}`;
+  const key =  `typeset/${moment().format('YYYYMMDDhhmmss')}-${(Math.random()*100000).toFixed(0)}.${req.file.mimetype.split('/')[1]}`;
+
   const localFile = `/tmp/my-img/${req.file.originalname}`;
   const stream = fs.createReadStream(localFile)
   formStreams(key,stream,((respInfo,respBody)=>{
@@ -58,14 +62,15 @@ router.post('/uploader', upload.single('file'), (req, res) => {
       // console.log(respBody)
       const sql = 'insert into `xek_attachment` (`hash`,`path`,`source`,`create_date`) values (?,?,?,NOW());';
       const value = [respBody.hash,key, req.body.source];
+      console.log(decodeURI(key))
       db.db(sql, value, resp => {
         res.status(200).send(response({
-          data:key
+          path:key
         }))
       });
     } else {
       console.log(respInfo.statusCode);
-      console.log('qiniu-'+respBody);
+      console.log(respBody);
     }
 
 
