@@ -16,6 +16,8 @@ const options = {
 };
 const putPolicy = new qiniu.rs.PutPolicy(options);
 const mac = new qiniu.auth.digest.Mac(accesskey, SecretKey);
+console.log(accesskey)
+console.log(SecretKey)
 const Token = putPolicy.uploadToken(mac);
 
 const  putStreams =function(key, localFile) {

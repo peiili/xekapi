@@ -65,7 +65,7 @@ router.post('/uploader', upload.single('file'), (req, res) => {
       });
     } else {
       console.log(respInfo.statusCode);
-      console.log(respBody);
+      console.log('qiniu-'+respBody);
     }
 
 
