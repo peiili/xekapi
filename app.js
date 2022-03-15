@@ -38,6 +38,7 @@ const grabbag = require('./src/routes/GrabBag');
 const active = require('./src/routes/Active');
 const Bing = require('./src/routes/bing');
 const user = require('./src/routes/user');
+const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
 // 爬虫
 // getDomDate.start();
@@ -46,6 +47,7 @@ app.use('/api/active', active);
 app.use('/api/bing', Bing);
 app.use('/api/user', user);
 app.use('/api/attachment', attachment);
+app.use('/api/typeset', Typeset);
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
