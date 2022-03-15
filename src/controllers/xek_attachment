@@ -1,0 +1,15 @@
+-- Create a new table called 'xek_attachment' in schema 'SchemaName'
+-- Drop the table if it already exists
+IF OBJECT_ID('SchemaName.xek_attachment', 'U') IS NOT NULL
+DROP TABLE SchemaName.xek_attachment
+GO
+-- Create the table in the specified schema
+CREATE TABLE xek.xek_attachment
+(
+  id INT NOT NULL PRIMARY KEY, -- primary key column
+  `name` varchar(50) NOT NULL,
+  `describe` varchar(50) NOT NULL,
+  `type` char(11) NOT NULL,
+  `create_date` date
+);
+GO
