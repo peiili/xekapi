@@ -30,8 +30,6 @@ router.post('/uploader', upload.single('file'),(req,res)=>{
   })
 })
 router.post('/page', (req, res) => {
-  const sql =
-    'SELECT `id`,`create_date`,`path` FROM `xek_attachment` WHERE `source`=? ORDER BY `create_date` DESC LIMIT ?,?;';
 
   /**
    * 参数
@@ -39,14 +37,16 @@ router.post('/page', (req, res) => {
    * 当前页数，
    * 每页显示条数，默认10
    */
-  const { source, page, size } = req.body;
+  const { page, size } = req.body;
   try {
-    const countSql = 'SELECT COUNT(id) FROM `xek_attachment` WHERE source=?'
+    const countSql = 'SELECT COUNT(id) FROM `xek_typeset`'
     let count = ''
-    db.db(countSql,[source],e=>{
+    db.db(countSql,[],e=>{
       count = e[0]['COUNT(id)']
     })
-    db.db(sql, [source, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
+    const sql = 'SELECT xt.`id`,xt.`create_time`,xt.`start`,xt.`download`,xa.`id` AS `xa_id`,xa.`path` AS `xa_path` FROM `xek_typeset` xt LEFT JOIN `xek_attachment` `xa` ON xt.`attachment_id`=xa.`id` ORDER BY `create_time` DESC LIMIT ?,?;';
+
+    db.db(sql, [(page - 1) * Number(size) || 0, Number(size) || 10], e => {
       const data = {
         success: true,
         data: {
