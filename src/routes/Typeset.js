@@ -66,4 +66,18 @@ router.post('/page', (req, res) => {
     res.status(500).send(data);
   }
 });
+router.put('/',(req,res)=>{
+  const {start,download,id} =req.body
+  const sql = 'UPDATE `xek_typeset` SET `start`=?,`download`=? WHERE `id`=?'
+  if(!id){
+    res.status(400).send(errorMsg('id is required'))
+    return;
+  }
+  db.db(sql,[start,download,id],(resp)=>{
+    console.log(resp)
+    res.status(200).send(response({
+        data:'success',
+      }))
+  })
+})
 module.exports = router;
