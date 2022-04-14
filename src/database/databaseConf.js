@@ -1,7 +1,7 @@
 const config = {
-  host: '127.0.0.1',
+  host: 'rm-bp1r11zh6j1nnf09l1o.mysql.rds.aliyuncs.com',
   password: process.env.DB_PASSWORD,
-  user: 'root',
+  user: 'xek',
   database: 'xek'
 };
 console.log(`password:${process.env.DB_PASSWORD}`);
