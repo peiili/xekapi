@@ -6,7 +6,7 @@ const router = express.Router();
 // 获取文章标题
 router.post('/getList', (req, res) => {
   const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
+    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
 
   /**
    * 参数
@@ -55,8 +55,8 @@ router.post('/getContent', (req, res) => {
 });
 // 写入文章内容
 router.post('/addContent', (req, res) => {
-  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`description`,`type`) VALUES(?,NOW(),?,?,?)';
-  db.db(sql,[req.body.title,req.body.content,req.body.description, req.body.type], success => {
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?)';
+  db.db(sql,[req.body.title,req.body.content,req.body.keywords,req.body.description, req.body.type], success => {
     const data = {
       success: true,
       data: true
@@ -66,8 +66,8 @@ router.post('/addContent', (req, res) => {
 });
 // 更新文章内容
 router.put('/putContent', (req, res) => {
-  const sql = 'UPDATE `xek_article` SET title=?,content=?,description=?,created_date=NOW() WHERE `id`=?';
-  db.db(sql,[req.body.title,req.body.content,req.body.description,req.body.id], success => {
+  const sql = 'UPDATE `xek_article` SET title=?,content=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
+  db.db(sql,[req.body.title,req.body.content,req.body.keywords,req.body.description,req.body.id], success => {
     const data = {
       success: true,
       data: true
