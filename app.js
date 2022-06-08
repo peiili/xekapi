@@ -10,7 +10,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json(
   {
-    limit:2048
+    limit:2048000
   }
 ));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
@@ -44,6 +44,7 @@ const Bing = require('./src/routes/bing');
 const user = require('./src/routes/user');
 const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
+const PdfToImage = require('./src/routes/PdfToImage');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
@@ -51,7 +52,8 @@ app.use('/api/active', active);
 app.use('/api/bing', Bing);
 app.use('/api/user', user);
 app.use('/api/attachment', attachment);
-app.use('/api/typeset', Typeset);
+app.use('/api/typeset', Typeset)
+   .use('/api/pdftoimage',PdfToImage);
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
