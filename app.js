@@ -8,7 +8,11 @@ const getDomDate = require('./src/cheerio');
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+app.use(bodyParser.json(
+  {
+    limit:2048
+  }
+));
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
 if (process.env.NODE_ENV) {
   app.use(morgan('dev', { stream: accessLogStream }));
