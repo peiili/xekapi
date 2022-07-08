@@ -44,7 +44,7 @@ const Bing = require('./src/routes/bing');
 const user = require('./src/routes/user');
 const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
-const PdfToImage = require('./src/routes/PdfToImage');
+const PdfToImage = require('./src/routes/PdfToImage/index');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);

@@ -7,7 +7,7 @@ router.get('/randomBing', (req, res) => {
   const sql = 'SELECT * FROM `xek_bing` ORDER BY RAND() LIMIT 1;';
   console.log(sql);
   db.db(sql, [], resp => {
-    res.redirect(302, `https://www.dlsjf.top/${resp[0].name}?imageView2/2/w/${req.query.w}`);
+    res.redirect(302, `https://xek.dlsjf.top/${resp[0].name}?imageView2/2/w/${req.query.w}`);
   });
 });
 // 分页查询图库图片

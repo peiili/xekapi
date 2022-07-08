@@ -4,7 +4,7 @@ const fs = require('fs')
 const moment = require('moment')
 const db = require('../database/connection');
 const multer = require('multer');
-const {putStream,formStreams} = require('../controllers/qiniu');
+const {putStreams,formStreams} = require('../controllers/qiniu');
 
 const router = express.Router();
 
@@ -40,7 +40,7 @@ const uploader =function(req,res,cb){
 router.post('/', upload.single('image'), (req, res) => {
   const key = `tmp/${req.file.originalname}`;
   const localFile = `/tmp/my-img/${req.file.originalname}`;
-  putStream(key, localFile);
+  putStreams(key, localFile);
   res.send();
 });
 router.post('/uploader', upload.single('file'), (req, res) => {

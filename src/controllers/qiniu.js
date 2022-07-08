@@ -14,8 +14,12 @@ const options = {
   returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}',
   callbackBodyType: 'application/json'
 };
-
-const  putStreams =function(key, localFile) {
+/**
+ * 上传本地文件
+ * @param key 目标文件名
+ * @param localFile 本地文件路径
+ */
+const putStreams =function(key, localFile,cb) {
 
   const putPolicy = new qiniu.rs.PutPolicy(options);
   const mac = new qiniu.auth.digest.Mac(accesskey, SecretKey);
@@ -26,12 +30,19 @@ const  putStreams =function(key, localFile) {
     }
     if (respInfo.statusCode === 200) {
       console.log(respBody);
+      cb(respInfo,respBody)
     } else {
       console.log(respInfo.statusCode);
       console.log(respBody);
     }
   });
 }
+/**
+ * 上传流文件
+ * @param key 目标文件名
+ * @param localFile 本地文件路径
+ * @param localFile 本地文件路径
+ */
 const formStreams= function(key,stream,cb){
   const putPolicy = new qiniu.rs.PutPolicy(options);
   const mac = new qiniu.auth.digest.Mac(accesskey, SecretKey);
