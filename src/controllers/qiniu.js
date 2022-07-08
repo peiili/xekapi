@@ -1,8 +1,8 @@
 const qiniu = require('qiniu');
 
 const config = new qiniu.conf.Config();
-const accesskey = 'sKinjQ5quCjitqHIAdhSNVjMpW7fB0aud5bVdjuR';
-const SecretKey = 'YxdUUrWMa2bl7g60nFOGlvUAy42x4OvEOoJxmYf1';
+const accesskey = process.env.QINIU_ACCESSKEY;
+const SecretKey = process.env.QINIU_SECRETKEY;
 
 // 空间对应的机房
 config.zone = qiniu.zone.Zone_z0;

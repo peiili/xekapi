@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=370px, initial-scale=1.0">
+    <title>pdf 转图片</title>
+</head>
+<body>
+  <div id="images"></div>
+  
+</body>
+</html>
+<script>
+  let currentPage = 0
+  let imgList = []
+  const images = document.getElementById('images')
+  function lastPage() {
+    if(currentPage<=0) return;
+    currentPage-=1
+    const imgSrc = imgList.slice(currentPage,currentPage+1)
+    images.innerHTML = render(imgSrc)
+  }
+  function nextPage() {
+    if(currentPage>=(imgList.length-1)) return;
+    currentPage+=1
+    const imgSrc = imgList.slice(currentPage,currentPage+1)
+    images.innerHTML = render(imgSrc)
+  }
+  function render(src){
+    return `
+    <div>
+    <img width='400px' src='/img/${src}' />
+    </div>
+    <button onclick="lastPage()">上一张</button>
+     当前页:&emsp;${currentPage+1}
+    <button onclick="nextPage()">下一张</button>
+    `
+  }
+  const id = location.href.split('=')[1]
+  const url = '/imgs?id='+id
+  fetch(url).then(res=>res.json()).then(e=>{
+    imgList = e;
+    images.innerHTML = render(imgList[0])
+  })
+</script>
