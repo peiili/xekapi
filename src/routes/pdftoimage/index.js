@@ -72,6 +72,19 @@ router.get('/img/:path',(req,res) => {
     res.type('jpg')
     res.status(200).send(img);
 })
+router.get('/download',(req,res) => {
+    const {id} = req.query
+    const shell = `cd /tmp/my-img/${id}&tar -zxvf ${id}.tar.gz`
+    exec(shell,(err, stdout, stderr)=>{
+        if (err) {
+            console.error(err);
+            return;
+        }
+        res.status(200).send(response({
+            fail: `img/${id}.tar.gz`
+        }))
+    })
+})
 
 
 module.exports = router;
