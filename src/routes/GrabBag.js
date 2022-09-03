@@ -18,21 +18,21 @@ router.post('/getList', (req, res) => {
   try {
     const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=?'
     let count = ''
-    db.db(countSql,[type,'1'],e=>{
-      count = e[0]['COUNT(id)']
+    db.db(countSql,[type,'1'],res1=>{
+      count = res1[0]['COUNT(id)']
+      db.db(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
+        const data = {
+          success: true,
+          data: {
+            currentPage:page,
+            total:Math.ceil(count/Number(size)),
+            count,
+            list:e,
+          }
+        };
+        res.status(200).send(data);
+      });
     })
-    db.db(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
-      const data = {
-        success: true,
-        data: {
-          currentPage:page,
-          total:Math.ceil(count/Number(size)),
-          count,
-          list:e,
-        }
-      };
-      res.status(200).send(data);
-    });
   } catch (error) {
     const data = {
       success: false,
