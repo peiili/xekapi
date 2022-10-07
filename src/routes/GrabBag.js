@@ -6,7 +6,7 @@ const router = express.Router();
 // 获取文章标题
 router.post('/getList', (req, res) => {
   const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
+    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
 
   /**
    * 参数
@@ -68,6 +68,17 @@ router.post('/addContent', (req, res) => {
 router.put('/putContent', (req, res) => {
   const sql = 'UPDATE `xek_article` SET title=?,content=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
   db.db(sql,[req.body.title,req.body.content,req.body.keywords,req.body.description,req.body.id], success => {
+    const data = {
+      success: true,
+      data: true
+    };
+    res.status(200).send(data);
+  });
+});
+// 更新文章浏览量
+router.get('/view/:id', (req, res) => {
+  const sql = 'UPDATE `xek_article` xa SET xa.view= xa.view+ 1 where id= ?';
+  db.db(sql,[req.params.id], success => {
     const data = {
       success: true,
       data: true
