@@ -45,6 +45,7 @@ const user = require('./src/routes/user');
 const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
 const PdfToImage = require('./src/routes/pdftoimage/index');
+const Website = require('./src/routes/website/index');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
@@ -53,7 +54,8 @@ app.use('/api/bing', Bing);
 app.use('/api/user', user);
 app.use('/api/attachment', attachment);
 app.use('/api/typeset', Typeset)
-   .use('/api/pdftoimage',PdfToImage);
+   .use('/api/pdftoimage',PdfToImage)
+   .use('/api/website',Website);
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
