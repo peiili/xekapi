@@ -14,9 +14,15 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 router.post('/short',upload.single('file'),(req,res)=>{
-  imageToHash(req.file.path,({hash,width,height})=>{
-    res.status(200).send(response({hash,width,height}))
-  })
+  if(req.file){
+    imageToHash(req.file.path,({hash,width,height})=>{
+      res.status(200).send(response({hash,width,height}))
+    })
+  }else{
+    imageToHash(req.body.path,({hash,width,height})=>{
+      res.status(200).send(response({hash,width,height}))
+    })
+  }
 })
 
 module.exports = router;
