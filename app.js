@@ -47,6 +47,7 @@ const attachment = require('./src/routes/attachment');
 const PdfToImage = require('./src/routes/pdftoimage/index');
 const Website = require('./src/routes/website/index');
 const Wechat = require('./src/routes/wechat/index.js');
+const blurhash = require('./src/routes/blurhash/index');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
@@ -57,7 +58,8 @@ app.use('/api/attachment', attachment);
 app.use('/api/typeset', Typeset)
    .use('/api/pdftoimage',PdfToImage)
    .use('/api/wechat',Wechat)
-   .use('/api/website',Website);
+   .use('/api/website',Website)
+   .use('/api/blurhash',blurhash);
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

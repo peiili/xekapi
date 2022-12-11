@@ -55,8 +55,9 @@ router.post('/getContent', (req, res) => {
 });
 // 写入文章内容
 router.post('/addContent', (req, res) => {
-  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?)';
-  db.db(sql,[req.body.title,req.body.content,req.body.keywords,req.body.description, req.body.type], success => {
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`marked`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?,?)';
+  var {title,content,marked,keywords,description, type} = req.body;
+  db.db(sql,[title,content,marked,keywords,description, type], success => {
     const data = {
       success: true,
       data: true
@@ -66,8 +67,10 @@ router.post('/addContent', (req, res) => {
 });
 // 更新文章内容
 router.put('/putContent', (req, res) => {
-  const sql = 'UPDATE `xek_article` SET title=?,content=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
-  db.db(sql,[req.body.title,req.body.content,req.body.keywords,req.body.description,req.body.id], success => {
+  const sql = 'UPDATE `xek_article` SET title=?,content=?,marked=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
+  console.log(req.body)
+  var {title,content,marked,keywords,description, id} = req.body;
+  db.db(sql,[title,content,marked,keywords,description, id], success => {
     const data = {
       success: true,
       data: true
