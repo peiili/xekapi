@@ -1,9 +1,15 @@
 const request = require('request');
-
+const {createHash} = require('crypto')
 const appid = 'wxf76889c1d1208b4f';
 const secret = 'e6b87d38b76518cea5fc58d8c58c0040';
+const token = '0ef3cddb45816ff9a8160cf52cee5240'
 // eslint-disable-next-line import/prefer-default-export
-
+const encrypt = (algorithm, content) => {
+  let hash = createHash(algorithm)
+  hash.update(content)
+  return hash.digest('hex')
+}
+const sha1 = (content) => encrypt('sha1', content)
 function getAccessToken(callback) {
   const url = `https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=${appid}&secret=${secret}`;
   request(url, (err, res, body) => {
@@ -131,5 +137,6 @@ module.exports = {
   sendMessage,
   getUserInfo,
   getNumber,
-  getQrcode
+  getQrcode,
+  sha1
 };

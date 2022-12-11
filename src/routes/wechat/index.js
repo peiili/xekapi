@@ -1,7 +1,9 @@
 const express = require('express');
 const db = require('../../database/connection');
+
 const router = express.Router();
-const { getOpenId, getUserInfo, sendMessage, getAccessToken,getNumber,getQrcode  } = require('./control');
+const { getOpenId, getUserInfo, sendMessage, getAccessToken,getNumber,getQrcode,sha1  } = require('./control');
+
 let accessToken = ''
 getAccessToken((body)=>{
   accessToken = body.access_token
@@ -24,7 +26,20 @@ router.post('/subscribe/qrcode', (req, res) => {
  */
 router.post('/message', (req, res) => {
   console.log(req.body)
-        res.status(200).send('')
+  var token = '0ef3cddb45816ff9a8160cf52cee5240'
+  var signature = req.query.signature
+  var nonce = req.query.nonce
+  var timestamp = req.query.timestamp
+  var echostr = req.query.echostr
+  var str = [token,timestamp,nonce].sort().join('')
+  var sha = sha1(str);
+  if(sha===signature){
+    res.status(200).send(echostr+'')
+  }else{
+    res.status(200).send('wrong')
+
+  }
+
     // const body = req.body
     // getQrcode(accessToken,body,function(response){
     //   res.status(200).send(response)
