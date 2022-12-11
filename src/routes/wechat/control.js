@@ -63,7 +63,27 @@ function sendMessage(ACCESS_TOKEN, data, callback) {
     }
   );
 }
-
+function getQrcode(ACCESS_TOKEN,data,callback){
+  const url = `https://api.weixin.qq.com/cgi-bin/qrcode/create?access_token=${ACCESS_TOKEN}`;
+  request(
+    {
+      url,
+      method: 'POST',
+      json: true,
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: data
+    },
+    (err, res, body) => {
+      if (!err && res) {
+        callback(body);
+      } else {
+        console.log(err);
+      }
+    }
+  );
+}
 
 function getNumber(callback){
   let formData={'params':'BEvehIahEMZGIT3yW02gFJXpAp9xDtUd9FG4ykCnJ3S/915C56Zmprjq0EQPd7m6tKomBGekbJYAJznTxC+lVg/rzpiDoBpxUdHPf6XjpK8KjqwqEE2vHgCKCSqwt+K8qlvMZ4z183kvSDr+mvOi5p/k6qeBypOEpq6nGxuEYkI='}
@@ -110,5 +130,6 @@ module.exports = {
   getOpenId,
   sendMessage,
   getUserInfo,
-  getNumber
+  getNumber,
+  getQrcode
 };

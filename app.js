@@ -46,6 +46,7 @@ const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
 const PdfToImage = require('./src/routes/pdftoimage/index');
 const Website = require('./src/routes/website/index');
+const Wechat = require('./src/routes/wechat/index.js');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
@@ -55,6 +56,7 @@ app.use('/api/user', user);
 app.use('/api/attachment', attachment);
 app.use('/api/typeset', Typeset)
    .use('/api/pdftoimage',PdfToImage)
+   .use('/api/wechat',Wechat)
    .use('/api/website',Website);
 const port = 5166;
 app.listen(port, () => {

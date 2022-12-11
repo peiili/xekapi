@@ -81,8 +81,8 @@ setInterval(()=>{
 
 
 let a = 5000
-setInterval(()=>{
-  start()
-  a= ((Math.random()+1)*5000).toFixed(0)
-  // console.log(a)
-},a)
+// setInterval(()=>{
+//   start()
+//   a= ((Math.random()+1)*5000).toFixed(0)
+//   // console.log(a)
+// },a)
