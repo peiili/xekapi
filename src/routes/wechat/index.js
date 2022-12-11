@@ -25,7 +25,7 @@ router.post('/subscribe/qrcode', (req, res) => {
  * 获取微信发送的事件消息
  */
 router.post('/message', (req, res) => {
-  console.log(req.body)
+  console.log(req.query)
   var token = '0ef3cddb45816ff9a8160cf52cee5240'
   var signature = req.query.signature
   var nonce = req.query.nonce
@@ -34,10 +34,9 @@ router.post('/message', (req, res) => {
   var str = [token,timestamp,nonce].sort().join('')
   var sha = sha1(str);
   if(sha===signature){
-    res.status(200).send(echostr+'')
+    res.type('html').status(200).send(echostr+'')
   }else{
-    res.status(200).send('wrong')
-
+    res.type('html').status(200).send('wrong')
   }
 
     // const body = req.body
