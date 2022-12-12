@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const express = require('express');
 const process = require('process');
 const bodyParser = require('body-parser');
+require('body-parser-xml')(bodyParser);
 const getDomDate = require('./src/cheerio');
 
 const app = express();
@@ -13,6 +14,8 @@ app.use(bodyParser.json(
     limit:2048000
   }
 ));
+app.use(bodyParser.xml());
+
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
 if (process.env.NODE_ENV) {
   app.use(morgan('dev', { stream: accessLogStream }));

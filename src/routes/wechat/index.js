@@ -40,7 +40,7 @@ router.get('/message', (req, res) => {
   }
 });
 router.post('/message', (req, res) => {
-  console.log(req.query)
+  console.log(req.body.xml)
   var token = '0ef3cddb45816ff9a8160cf52cee5240'
   var signature = req.query.signature
   var nonce = req.query.nonce
