@@ -24,7 +24,7 @@ router.post('/subscribe/qrcode', (req, res) => {
 /**
  * 获取微信发送的事件消息
  */
-router.post('/message', (req, res) => {
+router.get('/message', (req, res) => {
   console.log(req.query)
   var token = '0ef3cddb45816ff9a8160cf52cee5240'
   var signature = req.query.signature
