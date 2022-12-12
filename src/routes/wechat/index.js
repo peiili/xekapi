@@ -38,11 +38,21 @@ router.get('/message', (req, res) => {
   }else{
     res.type('html').status(200).send('wrong')
   }
-
-    // const body = req.body
-    // getQrcode(accessToken,body,function(response){
-    //   res.status(200).send(response)
-    // })
+});
+router.post('/message', (req, res) => {
+  console.log(req.query)
+  var token = '0ef3cddb45816ff9a8160cf52cee5240'
+  var signature = req.query.signature
+  var nonce = req.query.nonce
+  var timestamp = req.query.timestamp
+  var echostr = req.query.echostr
+  var str = [token,timestamp,nonce].sort().join('')
+  var sha = sha1(str);
+  if(sha===signature){
+    res.type('html').status(200).send(echostr+'')
+  }else{
+    res.type('html').status(200).send('wrong')
+  }
 });
 
 module.exports = router;
