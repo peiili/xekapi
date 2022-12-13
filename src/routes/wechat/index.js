@@ -7,6 +7,7 @@ const { getOpenId, getUserInfo, sendMessage, getAccessToken,getNumber,getQrcode,
 let accessToken = ''
 getAccessToken((body)=>{
   accessToken = body.access_token
+  console.log(accessToken)
 })
 setInterval(()=>{
   getAccessToken((body)=>{
@@ -14,6 +15,7 @@ setInterval(()=>{
     accessToken = body.access_token
   })
 },7100*1000)
+
 // 获取文章标题
 router.post('/subscribe/qrcode', (req, res) => {
     const body = req.body
@@ -55,14 +57,14 @@ router.post('/message', (req, res) => {
     var $toUsername = xml.ToUserName[0]
     var $time = new Date().getTime();
     if($MsgType==='text'){
-      var $contentStr = "您发的消息类型不是文本。而是"+$MsgType;
+      var content = xml.Content[0]
+      var $contentStr = content+'吧！';
       var $resultStr = `<xml>  
                           <ToUserName><![CDATA[${$fromUsername}]]></ToUserName>  
                           <FromUserName><![CDATA[${$toUsername}]]></FromUserName>  
                           <CreateTime>${$time}</CreateTime>  
                           <MsgType><![CDATA[text]]></MsgType>  
                           <Content><![CDATA[${$contentStr}]]></Content>  
-                          <FuncFlag>0</FuncFlag>  
                         </xml>`;
         res.status(200).send($resultStr)
     }else if($MsgType==='event'){
@@ -76,7 +78,6 @@ router.post('/message', (req, res) => {
                             <CreateTime>${$time}</CreateTime>  
                             <MsgType><![CDATA[text]]></MsgType>  
                             <Content><![CDATA[${$contentStr}]]></Content>  
-                            <FuncFlag>0</FuncFlag>  
                           </xml>`;
           res.status(200).send($resultStr)
 
@@ -89,7 +90,6 @@ router.post('/message', (req, res) => {
                           <CreateTime>${$time}</CreateTime>  
                           <MsgType><![CDATA[text]]></MsgType>  
                           <Content><![CDATA[${$contentStr}]]></Content>  
-                          <FuncFlag>0</FuncFlag>  
                         </xml>`;
         res.status(200).send($resultStr)
     }
