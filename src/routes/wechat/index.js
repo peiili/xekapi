@@ -41,6 +41,7 @@ router.get('/message', (req, res) => {
 });
 router.post('/message', (req, res) => {
   var xml = req.body.xml
+  console.log(xml)
   var token = '0ef3cddb45816ff9a8160cf52cee5240'
   var signature = req.query.signature
   var nonce = req.query.nonce
@@ -49,11 +50,12 @@ router.post('/message', (req, res) => {
   var str = [token,timestamp,nonce].sort().join('')
   var sha = sha1(str);
   if(sha===signature){
-    
-      var $fromUsername = xml.FromUserName[0]
-      var $toUsername = xml.ToUserName[0]
-      var $time = new Date().getTime();
-      var $contentStr = "您发的消息类型不是文本。而是".$msgType;
+    var $MsgType = xml.MsgType[0]
+    var $fromUsername = xml.FromUserName[0]
+    var $toUsername = xml.ToUserName[0]
+    var $time = new Date().getTime();
+    if($MsgType==='text'){
+      var $contentStr = "您发的消息类型不是文本。而是"+$MsgType;
       var $resultStr = `<xml>  
                           <ToUserName><![CDATA[${$fromUsername}]]></ToUserName>  
                           <FromUserName><![CDATA[${$toUsername}]]></FromUserName>  
@@ -63,6 +65,34 @@ router.post('/message', (req, res) => {
                           <FuncFlag>0</FuncFlag>  
                         </xml>`;
         res.status(200).send($resultStr)
+    }else if($MsgType==='event'){
+      var Event = xml.Event[0]
+      if(Event==='SCAN'){
+        var key = xml.EventKey[0]
+        var $contentStr = key;
+        var $resultStr = `<xml>  
+                            <ToUserName><![CDATA[${$fromUsername}]]></ToUserName>  
+                            <FromUserName><![CDATA[${$toUsername}]]></FromUserName>  
+                            <CreateTime>${$time}</CreateTime>  
+                            <MsgType><![CDATA[text]]></MsgType>  
+                            <Content><![CDATA[${$contentStr}]]></Content>  
+                            <FuncFlag>0</FuncFlag>  
+                          </xml>`;
+          res.status(200).send($resultStr)
+
+      }
+    }else{
+      var $contentStr = "您发的消息类型不是文本。而是"+$MsgType;
+      var $resultStr = `<xml>  
+                          <ToUserName><![CDATA[${$fromUsername}]]></ToUserName>  
+                          <FromUserName><![CDATA[${$toUsername}]]></FromUserName>  
+                          <CreateTime>${$time}</CreateTime>  
+                          <MsgType><![CDATA[text]]></MsgType>  
+                          <Content><![CDATA[${$contentStr}]]></Content>  
+                          <FuncFlag>0</FuncFlag>  
+                        </xml>`;
+        res.status(200).send($resultStr)
+    }
   }else{
     res.type('xml').status(200).send('wrong')
   }
