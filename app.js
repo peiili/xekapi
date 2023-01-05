@@ -62,6 +62,7 @@ app.use('/api/attachment', attachment);
 app.use('/api/typeset', Typeset)
    .use('/api/pdftoimage',PdfToImage)
    .use('/api/wechat',Wechat)
+   .use('/api/log',Log)
    .use('/api/website',Website)
    .use('/api/blurhash',blurhash);
 const port = 5166;
