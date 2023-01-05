@@ -51,6 +51,7 @@ const PdfToImage = require('./src/routes/pdftoimage/index');
 const Website = require('./src/routes/website/index');
 const Wechat = require('./src/routes/wechat/index.js');
 const blurhash = require('./src/routes/blurhash/index');
+const Log = require('./src/routes/log/index.js');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);

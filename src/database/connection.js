@@ -32,3 +32,4 @@ function getDb(sql, arr, callback) {
 }
 
 module.exports.db = getDb;
+module.exports.query = getDb;
