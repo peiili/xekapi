@@ -10,6 +10,7 @@ router.get('/',(req,res)=>{
   var user_client = JSON.stringify(req.rawHeaders)
   if(!tag){
     res.status(400).send(errorMsg('tag is required'))
+    return
   }
   var sql = `insert into custom_logs (ip,host,tag,create_time,user_data,user_client) values (?,?,?,NOW(),?,?)`
   db.query(sql,[ip,host,tag,user_data,user_client],()=>{
