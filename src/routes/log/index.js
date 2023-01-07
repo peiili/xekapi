@@ -4,7 +4,7 @@ const db = require('../../database/connection');
 const {response,errorMsg} = require('../../controllers/reponsecontroller');
 router.get('/',(req,res)=>{
   // var ip = req.ip
-  var host = req.query.hostname||''
+  var host = req.headers['referer']
   var tag = req.query.tag
   var user_data = req.query.userData||''
   var user_client = JSON.stringify(req.rawHeaders)
@@ -26,7 +26,7 @@ router.get('/',(req,res)=>{
 router.get('/tongji',(req,res)=>{
   res.setHeader('Access-Control-Allow-Origin','*');
   res.setHeader('Access-Control-Allow-Methods','*');
-  res.status(200).contentType('application/javascript').send('alert("123")')
+  res.status(200).contentType('application/javascript').send('')
 })
 
 module.exports = router; 
