@@ -52,6 +52,7 @@ const Website = require('./src/routes/website/index');
 const Wechat = require('./src/routes/wechat/index.js');
 const blurhash = require('./src/routes/blurhash/index');
 const Log = require('./src/routes/log/index.js');
+const Mailer = require('./src/routes/mailer/index.js');
 // 爬虫
 // getDomDate.start();
 app.use('/api/grabbag', grabbag);
@@ -65,6 +66,7 @@ app.use('/api/typeset', Typeset)
    .use('/api/log',Log)
    .use('/api/website',Website)
    .use('/api/blurhash',blurhash);
+   .use('/api/mailer',Mailer)
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
