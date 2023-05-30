@@ -6,7 +6,6 @@ const process = require('process');
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 const getDomDate = require('./src/cheerio');
-
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json(
@@ -14,7 +13,12 @@ app.use(bodyParser.json(
     limit:2048000
   }
 ));
+// 设置xml解析，用于邮箱服务
 app.use(bodyParser.xml());
+
+// 设置ejs 模板引擎
+app.set('views',path.join(__dirname,'src/views'))
+app.set('view engine','ejs')
 
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
 if (process.env.NODE_ENV) {
@@ -41,6 +45,9 @@ if (process.env.NODE_ENV) {
 //   }
 // });
 
+//视图
+const views = require('./src/routes/views')
+
 const grabbag = require('./src/routes/GrabBag');
 const active = require('./src/routes/Active');
 const Bing = require('./src/routes/bing');
@@ -65,8 +72,10 @@ app.use('/api/typeset', Typeset)
    .use('/api/wechat',Wechat)
    .use('/api/log',Log)
    .use('/api/website',Website)
-   .use('/api/blurhash',blurhash);
+   .use('/api/blurhash',blurhash)
    .use('/api/mailer',Mailer)
+   .use('/',views)
+   .use('/views',views)
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);
