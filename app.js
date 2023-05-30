@@ -62,12 +62,12 @@ const Log = require('./src/routes/log/index.js');
 const Mailer = require('./src/routes/mailer/index.js');
 // 爬虫
 // getDomDate.start();
-app.use('/api/grabbag', grabbag);
-app.use('/api/active', active);
-app.use('/api/bing', Bing);
-app.use('/api/user', user);
-app.use('/api/attachment', attachment);
-app.use('/api/typeset', Typeset)
+app.use('/api/grabbag', grabbag)
+   .use('/api/active', active)
+   .use('/api/bing', Bing)
+   .use('/api/user', user)
+   .use('/api/attachment', attachment)
+   .use('/api/typeset', Typeset)
    .use('/api/pdftoimage',PdfToImage)
    .use('/api/wechat',Wechat)
    .use('/api/log',Log)

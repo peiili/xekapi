@@ -11,11 +11,7 @@
 <body>
 <%- include('./../components/header',{current:current}) -%>
 <div>
-    <ul>
-        <% articleList.forEach(function(content){ %>
-            <li><a href="/article/<%= content.id %>"><%= content.title %></a></li>
-        <% }); %>
-      </ul>
+   
 </div>
 <%- include('./../components/footer',{current:current}) -%>
 </body>
