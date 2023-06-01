@@ -26,7 +26,7 @@ if (process.env.NODE_ENV) {
 } else {
   app.use(morgan('common', { stream: accessLogStream }));
 }
-
+process.env._root = __dirname
 // app.all('*', (req, res, next) => {
 //   const { origin, Origin, referer, Referer } = req.headers;
 //   const allowOrigin = origin || Origin || referer || Referer || '*';

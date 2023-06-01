@@ -1,0 +1,797 @@
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+}
+body {
+  background-color: #f2f2f2;
+}
+.pixel {
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 50%;
+  box-shadow: rgba(0,0,0,0.3) 0 2px 2px, inset rgba(0,0,0,0.1) 0 2px 2px;
+  box-sizing: border-box;
+  display: inline-block;
+  height: 38px;
+  overflow: hidden;
+  position: relative;
+  transform: translateZ(0);
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  width: 38px;
+}
+.hand {
+  background-color: #555;
+  left: 16px;
+  position: absolute;
+  transform: rotate(0deg);
+  transition: transform 500ms ease-in-out;
+  width: 2px;
+}
+.hand_hour {
+  height: 12px;
+  top: 6px;
+  transform: rotate(-60deg);
+  transform-origin: 50% 97%;
+}
+.hand_minute {
+  height: 16px;
+  top: 2px;
+  transform: rotate(60deg);
+  transform-origin: 50% 97%;
+}
+.number {
+  display: inline-block;
+  height: 230px;
+  margin: 8px;
+  overflow: hidden;
+  width: 310px;
+}
+.digit {
+  display: inline-block;
+  height: 228px;
+  line-height: 0;
+  position: relative;
+  width: 152px;
+}
+.digit_0 .pixel:nth-child(1) .hand_hour,
+.digit_0 .pixel:nth-child(6) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_0 .pixel:nth-child(1) .hand_minute,
+.digit_0 .pixel:nth-child(6) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_0 .pixel:nth-child(2) .hand_hour,
+.digit_0 .pixel:nth-child(3) .hand_hour,
+.digit_0 .pixel:nth-child(22) .hand_hour,
+.digit_0 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_0 .pixel:nth-child(2) .hand_minute,
+.digit_0 .pixel:nth-child(3) .hand_minute,
+.digit_0 .pixel:nth-child(22) .hand_minute,
+.digit_0 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_0 .pixel:nth-child(4) .hand_hour,
+.digit_0 .pixel:nth-child(7) .hand_hour {
+  transform: rotate(180deg);
+}
+.digit_0 .pixel:nth-child(4) .hand_minute,
+.digit_0 .pixel:nth-child(7) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_0 .pixel:nth-child(5) .hand_hour,
+.digit_0 .pixel:nth-child(8) .hand_hour,
+.digit_0 .pixel:nth-child(9) .hand_hour,
+.digit_0 .pixel:nth-child(10) .hand_hour,
+.digit_0 .pixel:nth-child(11) .hand_hour,
+.digit_0 .pixel:nth-child(12) .hand_hour,
+.digit_0 .pixel:nth-child(13) .hand_hour,
+.digit_0 .pixel:nth-child(14) .hand_hour,
+.digit_0 .pixel:nth-child(15) .hand_hour,
+.digit_0 .pixel:nth-child(16) .hand_hour,
+.digit_0 .pixel:nth-child(17) .hand_hour,
+.digit_0 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_0 .pixel:nth-child(5) .hand_minute,
+.digit_0 .pixel:nth-child(8) .hand_minute,
+.digit_0 .pixel:nth-child(9) .hand_minute,
+.digit_0 .pixel:nth-child(10) .hand_minute,
+.digit_0 .pixel:nth-child(11) .hand_minute,
+.digit_0 .pixel:nth-child(12) .hand_minute,
+.digit_0 .pixel:nth-child(13) .hand_minute,
+.digit_0 .pixel:nth-child(14) .hand_minute,
+.digit_0 .pixel:nth-child(15) .hand_minute,
+.digit_0 .pixel:nth-child(16) .hand_minute,
+.digit_0 .pixel:nth-child(17) .hand_minute,
+.digit_0 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_0 .pixel:nth-child(18) .hand_hour,
+.digit_0 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_0 .pixel:nth-child(18) .hand_minute,
+.digit_0 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_0 .pixel:nth-child(19) .hand_hour,
+.digit_0 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_0 .pixel:nth-child(19) .hand_minute,
+.digit_0 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_1 .pixel:nth-child(1) .hand_hour,
+.digit_1 .pixel:nth-child(17) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_1 .pixel:nth-child(1) .hand_minute,
+.digit_1 .pixel:nth-child(17) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_1 .pixel:nth-child(2) .hand_hour,
+.digit_1 .pixel:nth-child(22) .hand_hour,
+.digit_1 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_1 .pixel:nth-child(2) .hand_minute,
+.digit_1 .pixel:nth-child(22) .hand_minute,
+.digit_1 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_1 .pixel:nth-child(3) .hand_hour,
+.digit_1 .pixel:nth-child(6) .hand_hour,
+.digit_1 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_1 .pixel:nth-child(3) .hand_minute,
+.digit_1 .pixel:nth-child(6) .hand_minute,
+.digit_1 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_1 .pixel:nth-child(4) .hand_hour,
+.digit_1 .pixel:nth-child(8) .hand_hour,
+.digit_1 .pixel:nth-child(9) .hand_hour,
+.digit_1 .pixel:nth-child(12) .hand_hour,
+.digit_1 .pixel:nth-child(13) .hand_hour,
+.digit_1 .pixel:nth-child(16) .hand_hour {
+  transform: rotate(-135deg);
+}
+.digit_1 .pixel:nth-child(4) .hand_minute,
+.digit_1 .pixel:nth-child(8) .hand_minute,
+.digit_1 .pixel:nth-child(9) .hand_minute,
+.digit_1 .pixel:nth-child(12) .hand_minute,
+.digit_1 .pixel:nth-child(13) .hand_minute,
+.digit_1 .pixel:nth-child(16) .hand_minute {
+  transform: rotate(-135deg);
+}
+.digit_1 .pixel:nth-child(5) .hand_hour,
+.digit_1 .pixel:nth-child(19) .hand_hour,
+.digit_1 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_1 .pixel:nth-child(5) .hand_minute,
+.digit_1 .pixel:nth-child(19) .hand_minute,
+.digit_1 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_1 .pixel:nth-child(7) .hand_hour,
+.digit_1 .pixel:nth-child(10) .hand_hour,
+.digit_1 .pixel:nth-child(11) .hand_hour,
+.digit_1 .pixel:nth-child(14) .hand_hour,
+.digit_1 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_1 .pixel:nth-child(7) .hand_minute,
+.digit_1 .pixel:nth-child(10) .hand_minute,
+.digit_1 .pixel:nth-child(11) .hand_minute,
+.digit_1 .pixel:nth-child(14) .hand_minute,
+.digit_1 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_1 .pixel:nth-child(18) .hand_hour,
+.digit_1 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_1 .pixel:nth-child(18) .hand_minute,
+.digit_1 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_2 .pixel:nth-child(1) .hand_hour,
+.digit_2 .pixel:nth-child(9) .hand_hour,
+.digit_2 .pixel:nth-child(14) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_2 .pixel:nth-child(1) .hand_minute,
+.digit_2 .pixel:nth-child(9) .hand_minute,
+.digit_2 .pixel:nth-child(14) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_2 .pixel:nth-child(2) .hand_hour,
+.digit_2 .pixel:nth-child(3) .hand_hour,
+.digit_2 .pixel:nth-child(6) .hand_hour,
+.digit_2 .pixel:nth-child(10) .hand_hour,
+.digit_2 .pixel:nth-child(15) .hand_hour,
+.digit_2 .pixel:nth-child(19) .hand_hour,
+.digit_2 .pixel:nth-child(22) .hand_hour,
+.digit_2 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_2 .pixel:nth-child(2) .hand_minute,
+.digit_2 .pixel:nth-child(3) .hand_minute,
+.digit_2 .pixel:nth-child(6) .hand_minute,
+.digit_2 .pixel:nth-child(10) .hand_minute,
+.digit_2 .pixel:nth-child(15) .hand_minute,
+.digit_2 .pixel:nth-child(19) .hand_minute,
+.digit_2 .pixel:nth-child(22) .hand_minute,
+.digit_2 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_2 .pixel:nth-child(4) .hand_hour,
+.digit_2 .pixel:nth-child(7) .hand_hour,
+.digit_2 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_2 .pixel:nth-child(4) .hand_minute,
+.digit_2 .pixel:nth-child(7) .hand_minute,
+.digit_2 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(-180deg);
+}
+.digit_2 .pixel:nth-child(5) .hand_hour,
+.digit_2 .pixel:nth-child(18) .hand_hour,
+.digit_2 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_2 .pixel:nth-child(5) .hand_minute,
+.digit_2 .pixel:nth-child(18) .hand_minute,
+.digit_2 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_2 .pixel:nth-child(8) .hand_hour,
+.digit_2 .pixel:nth-child(12) .hand_hour,
+.digit_2 .pixel:nth-child(13) .hand_hour,
+.digit_2 .pixel:nth-child(17) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_2 .pixel:nth-child(8) .hand_minute,
+.digit_2 .pixel:nth-child(12) .hand_minute,
+.digit_2 .pixel:nth-child(13) .hand_minute,
+.digit_2 .pixel:nth-child(17) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_2 .pixel:nth-child(11) .hand_hour,
+.digit_2 .pixel:nth-child(16) .hand_hour,
+.digit_2 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_2 .pixel:nth-child(11) .hand_minute,
+.digit_2 .pixel:nth-child(16) .hand_minute,
+.digit_2 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_3 .pixel:nth-child(1) .hand_hour,
+.digit_3 .pixel:nth-child(10) .hand_hour,
+.digit_3 .pixel:nth-child(17) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_3 .pixel:nth-child(1) .hand_minute,
+.digit_3 .pixel:nth-child(10) .hand_minute,
+.digit_3 .pixel:nth-child(17) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_3 .pixel:nth-child(2) .hand_hour,
+.digit_3 .pixel:nth-child(3) .hand_hour,
+.digit_3 .pixel:nth-child(6) .hand_hour,
+.digit_3 .pixel:nth-child(18) .hand_hour,
+.digit_3 .pixel:nth-child(22) .hand_hour,
+.digit_3 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_3 .pixel:nth-child(2) .hand_minute,
+.digit_3 .pixel:nth-child(3) .hand_minute,
+.digit_3 .pixel:nth-child(6) .hand_minute,
+.digit_3 .pixel:nth-child(18) .hand_minute,
+.digit_3 .pixel:nth-child(22) .hand_minute,
+.digit_3 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_3 .pixel:nth-child(4) .hand_hour,
+.digit_3 .pixel:nth-child(7) .hand_hour,
+.digit_3 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_3 .pixel:nth-child(4) .hand_minute,
+.digit_3 .pixel:nth-child(7) .hand_minute,
+.digit_3 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(-180deg);
+}
+.digit_3 .pixel:nth-child(5) .hand_hour,
+.digit_3 .pixel:nth-child(14) .hand_hour,
+.digit_3 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_3 .pixel:nth-child(5) .hand_minute,
+.digit_3 .pixel:nth-child(14) .hand_minute,
+.digit_3 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_3 .pixel:nth-child(8) .hand_hour,
+.digit_3 .pixel:nth-child(12) .hand_hour,
+.digit_3 .pixel:nth-child(16) .hand_hour,
+.digit_3 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_3 .pixel:nth-child(8) .hand_minute,
+.digit_3 .pixel:nth-child(12) .hand_minute,
+.digit_3 .pixel:nth-child(16) .hand_minute,
+.digit_3 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_3 .pixel:nth-child(11) .hand_hour,
+.digit_3 .pixel:nth-child(19) .hand_hour,
+.digit_3 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_3 .pixel:nth-child(11) .hand_minute,
+.digit_3 .pixel:nth-child(19) .hand_minute,
+.digit_3 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(-90deg);
+}
+.digit_3 .pixel:nth-child(9) .hand_hour,
+.digit_3 .pixel:nth-child(13) .hand_hour {
+  transform: rotate(-135deg);
+}
+.digit_3 .pixel:nth-child(9) .hand_minute,
+.digit_3 .pixel:nth-child(13) .hand_minute {
+  transform: rotate(-135deg);
+}
+.digit_4 .pixel:nth-child(1) .hand_hour,
+.digit_4 .pixel:nth-child(3) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_4 .pixel:nth-child(1) .hand_minute,
+.digit_4 .pixel:nth-child(3) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_4 .pixel:nth-child(2) .hand_hour,
+.digit_4 .pixel:nth-child(4) .hand_hour,
+.digit_4 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_4 .pixel:nth-child(2) .hand_minute,
+.digit_4 .pixel:nth-child(4) .hand_minute,
+.digit_4 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_4 .pixel:nth-child(5) .hand_hour,
+.digit_4 .pixel:nth-child(6) .hand_hour,
+.digit_4 .pixel:nth-child(7) .hand_hour,
+.digit_4 .pixel:nth-child(8) .hand_hour,
+.digit_4 .pixel:nth-child(9) .hand_hour,
+.digit_4 .pixel:nth-child(12) .hand_hour,
+.digit_4 .pixel:nth-child(16) .hand_hour,
+.digit_4 .pixel:nth-child(19) .hand_hour,
+.digit_4 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_4 .pixel:nth-child(5) .hand_minute,
+.digit_4 .pixel:nth-child(6) .hand_minute,
+.digit_4 .pixel:nth-child(7) .hand_minute,
+.digit_4 .pixel:nth-child(8) .hand_minute,
+.digit_4 .pixel:nth-child(9) .hand_minute,
+.digit_4 .pixel:nth-child(12) .hand_minute,
+.digit_4 .pixel:nth-child(16) .hand_minute,
+.digit_4 .pixel:nth-child(19) .hand_minute,
+.digit_4 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_4 .pixel:nth-child(10) .hand_hour,
+.digit_4 .pixel:nth-child(13) .hand_hour,
+.digit_4 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_4 .pixel:nth-child(10) .hand_minute,
+.digit_4 .pixel:nth-child(13) .hand_minute,
+.digit_4 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_4 .pixel:nth-child(11) .hand_hour,
+.digit_4 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_4 .pixel:nth-child(11) .hand_minute,
+.digit_4 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_4 .pixel:nth-child(14) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_4 .pixel:nth-child(14) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_4 .pixel:nth-child(17) .hand_hour,
+.digit_4 .pixel:nth-child(18) .hand_hour,
+.digit_4 .pixel:nth-child(21) .hand_hour,
+.digit_4 .pixel:nth-child(22) .hand_hour {
+  transform: rotate(-135deg);
+}
+.digit_4 .pixel:nth-child(17) .hand_minute,
+.digit_4 .pixel:nth-child(18) .hand_minute,
+.digit_4 .pixel:nth-child(21) .hand_minute,
+.digit_4 .pixel:nth-child(22) .hand_minute {
+  transform: rotate(-135deg);
+}
+.digit_5 .pixel:nth-child(1) .hand_hour,
+.digit_5 .pixel:nth-child(6) .hand_hour,
+.digit_5 .pixel:nth-child(17) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_5 .pixel:nth-child(1) .hand_minute,
+.digit_5 .pixel:nth-child(6) .hand_minute,
+.digit_5 .pixel:nth-child(17) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_5 .pixel:nth-child(2) .hand_hour,
+.digit_5 .pixel:nth-child(3) .hand_hour,
+.digit_5 .pixel:nth-child(7) .hand_hour,
+.digit_5 .pixel:nth-child(11) .hand_hour,
+.digit_5 .pixel:nth-child(14) .hand_hour,
+.digit_5 .pixel:nth-child(18) .hand_hour,
+.digit_5 .pixel:nth-child(22) .hand_hour,
+.digit_5 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_5 .pixel:nth-child(2) .hand_minute,
+.digit_5 .pixel:nth-child(3) .hand_minute,
+.digit_5 .pixel:nth-child(7) .hand_minute,
+.digit_5 .pixel:nth-child(11) .hand_minute,
+.digit_5 .pixel:nth-child(14) .hand_minute,
+.digit_5 .pixel:nth-child(18) .hand_minute,
+.digit_5 .pixel:nth-child(22) .hand_minute,
+.digit_5 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_5 .pixel:nth-child(4) .hand_hour,
+.digit_5 .pixel:nth-child(12) .hand_hour,
+.digit_5 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_5 .pixel:nth-child(4) .hand_minute,
+.digit_5 .pixel:nth-child(12) .hand_minute,
+.digit_5 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_5 .pixel:nth-child(5) .hand_hour,
+.digit_5 .pixel:nth-child(9) .hand_hour,
+.digit_5 .pixel:nth-child(16) .hand_hour,
+.digit_5 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_5 .pixel:nth-child(5) .hand_minute,
+.digit_5 .pixel:nth-child(9) .hand_minute,
+.digit_5 .pixel:nth-child(16) .hand_minute,
+.digit_5 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_5 .pixel:nth-child(8) .hand_hour,
+.digit_5 .pixel:nth-child(19) .hand_hour,
+.digit_5 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_5 .pixel:nth-child(8) .hand_minute,
+.digit_5 .pixel:nth-child(19) .hand_minute,
+.digit_5 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_5 .pixel:nth-child(10) .hand_hour,
+.digit_5 .pixel:nth-child(13) .hand_hour,
+.digit_5 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_5 .pixel:nth-child(10) .hand_minute,
+.digit_5 .pixel:nth-child(13) .hand_minute,
+.digit_5 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_6 .pixel:nth-child(1) .hand_hour,
+.digit_6 .pixel:nth-child(6) .hand_hour,
+.digit_6 .pixel:nth-child(14) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_6 .pixel:nth-child(1) .hand_minute,
+.digit_6 .pixel:nth-child(6) .hand_minute,
+.digit_6 .pixel:nth-child(14) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_6 .pixel:nth-child(2) .hand_hour,
+.digit_6 .pixel:nth-child(3) .hand_hour,
+.digit_6 .pixel:nth-child(7) .hand_hour,
+.digit_6 .pixel:nth-child(11) .hand_hour,
+.digit_6 .pixel:nth-child(22) .hand_hour,
+.digit_6 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_6 .pixel:nth-child(2) .hand_minute,
+.digit_6 .pixel:nth-child(3) .hand_minute,
+.digit_6 .pixel:nth-child(7) .hand_minute,
+.digit_6 .pixel:nth-child(11) .hand_minute,
+.digit_6 .pixel:nth-child(22) .hand_minute,
+.digit_6 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_6 .pixel:nth-child(4) .hand_hour,
+.digit_6 .pixel:nth-child(12) .hand_hour,
+.digit_6 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_6 .pixel:nth-child(4) .hand_minute,
+.digit_6 .pixel:nth-child(12) .hand_minute,
+.digit_6 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_6 .pixel:nth-child(5) .hand_hour,
+.digit_6 .pixel:nth-child(9) .hand_hour,
+.digit_6 .pixel:nth-child(13) .hand_hour,
+.digit_6 .pixel:nth-child(16) .hand_hour,
+.digit_6 .pixel:nth-child(17) .hand_hour,
+.digit_6 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_6 .pixel:nth-child(5) .hand_minute,
+.digit_6 .pixel:nth-child(9) .hand_minute,
+.digit_6 .pixel:nth-child(13) .hand_minute,
+.digit_6 .pixel:nth-child(16) .hand_minute,
+.digit_6 .pixel:nth-child(17) .hand_minute,
+.digit_6 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_6 .pixel:nth-child(10) .hand_hour,
+.digit_6 .pixel:nth-child(18) .hand_hour,
+.digit_6 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_6 .pixel:nth-child(10) .hand_minute,
+.digit_6 .pixel:nth-child(18) .hand_minute,
+.digit_6 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_6 .pixel:nth-child(8) .hand_hour,
+.digit_6 .pixel:nth-child(19) .hand_hour,
+.digit_6 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_6 .pixel:nth-child(8) .hand_minute,
+.digit_6 .pixel:nth-child(19) .hand_minute,
+.digit_6 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_7 .pixel:nth-child(1) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_7 .pixel:nth-child(1) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_7 .pixel:nth-child(2) .hand_hour,
+.digit_7 .pixel:nth-child(3) .hand_hour,
+.digit_7 .pixel:nth-child(6) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_7 .pixel:nth-child(2) .hand_minute,
+.digit_7 .pixel:nth-child(3) .hand_minute,
+.digit_7 .pixel:nth-child(6) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_7 .pixel:nth-child(4) .hand_hour,
+.digit_7 .pixel:nth-child(7) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_7 .pixel:nth-child(4) .hand_minute,
+.digit_7 .pixel:nth-child(7) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_7 .pixel:nth-child(5) .hand_hour,
+.digit_7 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_7 .pixel:nth-child(5) .hand_minute,
+.digit_7 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_7 .pixel:nth-child(8) .hand_hour,
+.digit_7 .pixel:nth-child(11) .hand_hour,
+.digit_7 .pixel:nth-child(12) .hand_hour,
+.digit_7 .pixel:nth-child(15) .hand_hour,
+.digit_7 .pixel:nth-child(16) .hand_hour,
+.digit_7 .pixel:nth-child(19) .hand_hour,
+.digit_7 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_7 .pixel:nth-child(8) .hand_minute,
+.digit_7 .pixel:nth-child(11) .hand_minute,
+.digit_7 .pixel:nth-child(12) .hand_minute,
+.digit_7 .pixel:nth-child(15) .hand_minute,
+.digit_7 .pixel:nth-child(16) .hand_minute,
+.digit_7 .pixel:nth-child(19) .hand_minute,
+.digit_7 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_7 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_7 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_7 .pixel:nth-child(9) .hand_hour,
+.digit_7 .pixel:nth-child(10) .hand_hour,
+.digit_7 .pixel:nth-child(13) .hand_hour,
+.digit_7 .pixel:nth-child(14) .hand_hour,
+.digit_7 .pixel:nth-child(17) .hand_hour,
+.digit_7 .pixel:nth-child(18) .hand_hour,
+.digit_7 .pixel:nth-child(21) .hand_hour,
+.digit_7 .pixel:nth-child(22) .hand_hour {
+  transform: rotate(-135deg);
+}
+.digit_7 .pixel:nth-child(9) .hand_minute,
+.digit_7 .pixel:nth-child(10) .hand_minute,
+.digit_7 .pixel:nth-child(13) .hand_minute,
+.digit_7 .pixel:nth-child(14) .hand_minute,
+.digit_7 .pixel:nth-child(17) .hand_minute,
+.digit_7 .pixel:nth-child(18) .hand_minute,
+.digit_7 .pixel:nth-child(21) .hand_minute,
+.digit_7 .pixel:nth-child(22) .hand_minute {
+  transform: rotate(-135deg);
+}
+.digit_8 .pixel:nth-child(1) .hand_hour,
+.digit_8 .pixel:nth-child(6) .hand_hour,
+.digit_8 .pixel:nth-child(14) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_8 .pixel:nth-child(1) .hand_minute,
+.digit_8 .pixel:nth-child(6) .hand_minute,
+.digit_8 .pixel:nth-child(14) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_8 .pixel:nth-child(2) .hand_hour,
+.digit_8 .pixel:nth-child(3) .hand_hour,
+.digit_8 .pixel:nth-child(22) .hand_hour,
+.digit_8 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_8 .pixel:nth-child(2) .hand_minute,
+.digit_8 .pixel:nth-child(3) .hand_minute,
+.digit_8 .pixel:nth-child(22) .hand_minute,
+.digit_8 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_8 .pixel:nth-child(4) .hand_hour,
+.digit_8 .pixel:nth-child(7) .hand_hour,
+.digit_8 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_8 .pixel:nth-child(4) .hand_minute,
+.digit_8 .pixel:nth-child(7) .hand_minute,
+.digit_8 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_8 .pixel:nth-child(5) .hand_hour,
+.digit_8 .pixel:nth-child(8) .hand_hour,
+.digit_8 .pixel:nth-child(9) .hand_hour,
+.digit_8 .pixel:nth-child(12) .hand_hour,
+.digit_8 .pixel:nth-child(13) .hand_hour,
+.digit_8 .pixel:nth-child(16) .hand_hour,
+.digit_8 .pixel:nth-child(17) .hand_hour,
+.digit_8 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_8 .pixel:nth-child(5) .hand_minute,
+.digit_8 .pixel:nth-child(8) .hand_minute,
+.digit_8 .pixel:nth-child(9) .hand_minute,
+.digit_8 .pixel:nth-child(12) .hand_minute,
+.digit_8 .pixel:nth-child(13) .hand_minute,
+.digit_8 .pixel:nth-child(16) .hand_minute,
+.digit_8 .pixel:nth-child(17) .hand_minute,
+.digit_8 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_8 .pixel:nth-child(10) .hand_hour,
+.digit_8 .pixel:nth-child(18) .hand_hour,
+.digit_8 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_8 .pixel:nth-child(10) .hand_minute,
+.digit_8 .pixel:nth-child(18) .hand_minute,
+.digit_8 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_8 .pixel:nth-child(11) .hand_hour,
+.digit_8 .pixel:nth-child(19) .hand_hour,
+.digit_8 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_8 .pixel:nth-child(11) .hand_minute,
+.digit_8 .pixel:nth-child(19) .hand_minute,
+.digit_8 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}
+.digit_9 .pixel:nth-child(1) .hand_hour,
+.digit_9 .pixel:nth-child(6) .hand_hour,
+.digit_9 .pixel:nth-child(17) .hand_hour {
+  transform: rotate(90deg);
+}
+.digit_9 .pixel:nth-child(1) .hand_minute,
+.digit_9 .pixel:nth-child(6) .hand_minute,
+.digit_9 .pixel:nth-child(17) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_9 .pixel:nth-child(2) .hand_hour,
+.digit_9 .pixel:nth-child(3) .hand_hour,
+.digit_9 .pixel:nth-child(14) .hand_hour,
+.digit_9 .pixel:nth-child(18) .hand_hour,
+.digit_9 .pixel:nth-child(22) .hand_hour,
+.digit_9 .pixel:nth-child(23) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_9 .pixel:nth-child(2) .hand_minute,
+.digit_9 .pixel:nth-child(3) .hand_minute,
+.digit_9 .pixel:nth-child(14) .hand_minute,
+.digit_9 .pixel:nth-child(18) .hand_minute,
+.digit_9 .pixel:nth-child(22) .hand_minute,
+.digit_9 .pixel:nth-child(23) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_9 .pixel:nth-child(4) .hand_hour,
+.digit_9 .pixel:nth-child(7) .hand_hour,
+.digit_9 .pixel:nth-child(15) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_9 .pixel:nth-child(4) .hand_minute,
+.digit_9 .pixel:nth-child(7) .hand_minute,
+.digit_9 .pixel:nth-child(15) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_9 .pixel:nth-child(5) .hand_hour,
+.digit_9 .pixel:nth-child(8) .hand_hour,
+.digit_9 .pixel:nth-child(9) .hand_hour,
+.digit_9 .pixel:nth-child(12) .hand_hour,
+.digit_9 .pixel:nth-child(16) .hand_hour,
+.digit_9 .pixel:nth-child(20) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_9 .pixel:nth-child(5) .hand_minute,
+.digit_9 .pixel:nth-child(8) .hand_minute,
+.digit_9 .pixel:nth-child(9) .hand_minute,
+.digit_9 .pixel:nth-child(12) .hand_minute,
+.digit_9 .pixel:nth-child(16) .hand_minute,
+.digit_9 .pixel:nth-child(20) .hand_minute {
+  transform: rotate(180deg);
+}
+.digit_9 .pixel:nth-child(10) .hand_hour,
+.digit_9 .pixel:nth-child(13) .hand_hour,
+.digit_9 .pixel:nth-child(21) .hand_hour {
+  transform: rotate(0deg);
+}
+.digit_9 .pixel:nth-child(10) .hand_minute,
+.digit_9 .pixel:nth-child(13) .hand_minute,
+.digit_9 .pixel:nth-child(21) .hand_minute {
+  transform: rotate(90deg);
+}
+.digit_9 .pixel:nth-child(11) .hand_hour,
+.digit_9 .pixel:nth-child(19) .hand_hour,
+.digit_9 .pixel:nth-child(24) .hand_hour {
+  transform: rotate(-90deg);
+}
+.digit_9 .pixel:nth-child(11) .hand_minute,
+.digit_9 .pixel:nth-child(19) .hand_minute,
+.digit_9 .pixel:nth-child(24) .hand_minute {
+  transform: rotate(0deg);
+}

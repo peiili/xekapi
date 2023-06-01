@@ -1,3 +1,5 @@
+var fs = require('fs')
+var path = require('path')
 var express = require('express')
 var router = express.Router()
 const db = require('../database/connection');
@@ -50,5 +52,14 @@ router.get('/article/:id',(req,res)=>{
 
 router.get('/other',(req,res)=>{
     res.render('other',{current:'other'})
+})
+
+router.get('*.css',(req,res)=>{
+    var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
+    res.setHeader('content-type','text/css;charset=UTF-8').send(file);
+})
+router.get('*.js',(req,res)=>{
+  var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
+  res.setHeader('content-type','text/javascript;charset=UTF-8').send(file);
 })
 module.exports = router
