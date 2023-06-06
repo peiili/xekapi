@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="zh-hans">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.bootcdn.net/ajax/libs/twitter-bootstrap/5.2.3/js/bootstrap.min.js"></script>
+  <title>图像二值化</title>
+</head>
+<style>
+  .main{
+    max-width: 960px;
+    margin: 0 auto;
+    /* text-align: center; */
+  }
+</style>
+<body style="overflow-x: hidden;">
+  <%- include('./../../components/header',{current:current}) -%>
+    <div class="main">
+      <div class="row gx-3">
+        <div class="row">
+          <label for="width" class="col-form-label">宽度：<input type="number" id="width" /></label>
+        </div>
+
+        <div class="row">
+          <label for="file" class="col-form-label">
+            <input type="file" id="file">
+          </label>
+        </div>
+      </div>
+      <canvas id="canvas" style="max-width:20rem"></canvas>
+      <canvas id="canvas2" style="width:20rem"></canvas>
+      <!-- <p readonly id="result-hex"></p> -->
+      <div class="row">
+        <label for="threshold" class="col-form-label">
+          阈值：
+          <input type="range" id="threshold" value='0' max="255" min="0">
+        </label>
+      </div>
+      <div>
+        <button id="download" type="button" class="btn btn-primary">下载结果</button>
+      </div>
+      <div class="mt-3">
+        <label for="result-hex">输出:</label>
+        <textarea id="result-hex" style="width:100%"></textarea>
+      </div>
+    </div>
+    <%- include('./../../components/footer',{current:current}) -%>
+</body>
+
+</html>
+<script>
+  var fileEle = document.getElementById('file')
+  var widthEle = document.getElementById('width')
+  var canvas = document.getElementById('canvas')
+  var canvas2 = document.getElementById('canvas2')
+  var thresholdEle = document.getElementById('threshold')
+  var resultHexEle = document.getElementById('result-hex')
+
+  var ratio = 1;
+  var width = 100;
+  var height = width/ratio;
+  var imageData = null;
+  var viewWidth = 250;100
+  var threshold = 50;
+
+  widthEle.value = width;
+  thresholdEle.value = threshold;
+
+  function drawImage(width, height, img) {
+      canvas.width = width;
+      canvas.height = height;
+      var ctx = canvas.getContext('2d')
+      ctx.drawImage(img, 0, 0, width, height)
+      imageData = ctx.getImageData(0, 0, width, height)
+      convertImg(imageData.data, width)
+      matrix(imageData.data, width, height)
+
+  }
+  function grayscale(data, i) {
+      var r = data[i] * 0.3,
+          g = data[i + 1] * 0.59,
+          b = data[i + 2] * 0.11,
+          a = data[i + 3];
+
+      return { r, g, b, a }
+  }
+  function convertImg(data, width) {
+      let arr = ''
+      for (let i = 0; i < (data.length); i += 4) {
+          const { r, g, b, a } = grayscale(data, i)
+          let value = '0x00'
+          // if (i > 0 && i % (width * 4) === 0) {
+          //     arr += '\n'
+          // }
+          if (a >= 50) {
+              value = (r + g + b) < threshold ? '0x00' : '0xFF'
+          }
+          arr += (value + ',')
+      }
+      resultHexEle.value = arr
+      // console.log(arr);
+  }
+  /**
+   * x5扩展矩阵，只用于放大展示
+   * */
+  function matrix(colorMatrix, width, height) {
+      var size = 5
+      var ctx2 = canvas2.getContext('2d')
+      canvas2.width = width * size
+      canvas2.height = height * size
+      ctx2.clearRect(0, 0, width * size, height * size);
+
+      // 逐行遍历
+      for (let y = 0; y < height; y++) {
+          // 逐像素遍历
+          for (let x = 0; x < width; x++) {
+              const i = (y * width + x) * 4;
+              const { r, g, b, a } = grayscale(colorMatrix, i)
+              var value = 'FFFFFF00'
+              if (a >= 50) {
+                  value = (r + g + b) < threshold ? 'FFFFFF00' : '000000ff'
+              }
+              ctx2.fillStyle = `#${value}`;
+              ctx2.fillRect(x * size, y * size, size, size);
+          }
+      }
+  }
+  
+  fileEle.oninput = function (event) {
+      var file = event.target.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onload = function (res) {
+          var img = new Image()
+          img.src = res.target.result
+          img.onload = function () {
+              ratio = img.width / img.height
+              height = Math.ceil(width / ratio)
+              drawImage(width, height, img)
+          }
+      }
+  }
+  widthEle.onchange = function(){
+      var value = Number(event.target.value)
+      fileEle.value = ''
+      width = value
+  }
+  thresholdEle.onchange = function (event) {
+      var value = Number(event.target.value)
+      threshold = value
+      matrix(imageData.data, width, height)
+      convertImg(imageData.data, width)
+  }
+  var $download = document.getElementById('download')
+  $download.onclick = function () {
+      var value = resultHexEle.value
+      if (!value) {
+          alert('请上传图像')
+          return
+      }
+      let a = document.createElement('a');
+      a.href = 'data:text/plain;charset=utf-8,' + value
+      a.download = `result(${new Date().getHours()}:${new Date().getMinutes()}).txt`
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+  }
+</script>
