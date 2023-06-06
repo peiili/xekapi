@@ -59,10 +59,12 @@ router.get('/other/binary',(req,res)=>{
 
 router.get('*.css',(req,res)=>{
     var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
-    res.setHeader('content-type','text/css;charset=UTF-8').send(file);
+    res.setHeader('content-type','text/css;charset=UTF-8')
+    res.send(file);
 })
 router.get('*.js',(req,res)=>{
   var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
-  res.setHeader('content-type','text/javascript;charset=UTF-8').send(file);
+  res.setHeader('content-type','text/javascript;charset=UTF-8')
+  res.send(file);
 })
 module.exports = router
