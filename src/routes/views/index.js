@@ -40,7 +40,8 @@ router.get('/article',(req,res)=>{
       success: false,
       data: error
     };
-    res.status(500).send(data);
+    res.status(500)
+    res.send(data);
   }
     
 })
