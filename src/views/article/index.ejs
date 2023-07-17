@@ -10,7 +10,7 @@
 </head>
 <body>
 <%- include('./../components/header',{current:current}) -%>
-<div>
+<div class="container-sm">
     <ul>
         <% articleList.forEach(function(content){ %>
             <li><a href="/article/<%= content.id %>"><%= content.title %></a></li>
