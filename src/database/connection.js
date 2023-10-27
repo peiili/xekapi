@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 const { databaseConfig } = require('./databaseConf');
-
+console.log('引入1次');
 // 创建连接池
 
 const pool = mysql.createPool({

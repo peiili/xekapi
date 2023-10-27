@@ -43,13 +43,19 @@ router.get('/article',(req,res)=>{
       success: false,
       data: error
     };
-    res.status(500).send(data);
+    res.status(500)
+    res.send(data);
   }
     
 })
 
 router.get('/article/:id',(req,res)=>{
-    res.render('articleDetails',{current:'article'})
+  const countSql = 'SELECT title,content FROM `xek_article` WHERE id=?'
+  db.db(countSql,[req.params.id],data=>{
+    var title = data[0].title
+    var content = data[0].content
+    res.render('articleDetails',{current:'article',title:title,content:content})
+  })
   })
   
 router.get('/other',(req,res)=>{
