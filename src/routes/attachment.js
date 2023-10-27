@@ -2,7 +2,6 @@
 const express = require('express');
 const fs = require('fs')
 const moment = require('moment')
-const db = require('../database/connection');
 const multer = require('multer');
 const {putStreams,formStreams} = require('../controllers/qiniu');
 
@@ -20,6 +19,7 @@ const storage = multer.diskStorage({
 });
 const upload = multer({ storage });
 const uploader =function(req,res,cb){
+  var db = req.db
   const key =  `typeset/${moment().format('YYYYMMDDhhmmss')}-${(Math.random()*100000).toFixed(0)}.${req.file.mimetype.split('/')[1]}`;
   const localFile = `/tmp/my-img/${req.file.originalname}`;
   const stream = fs.createReadStream(localFile)

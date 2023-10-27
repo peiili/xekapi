@@ -2,7 +2,6 @@ const express = require('express');
 const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
 const moment = require('moment');
-const db = require('../database/connection');
 
 const { getOpenId, sendTemplateInfo } = require('../templateInfo');
 const { activeType } = require('../controllers/enums');
@@ -12,6 +11,7 @@ const router = express.Router();
 // 获取文章标题
 router.get('/activeTitleList', (req, res) => {
   // req type 类型
+  var db = req.db
   const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`content` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
   db.query(sql, [req.query.type], e => {
@@ -25,6 +25,7 @@ router.get('/activeTitleList', (req, res) => {
 
 // 获取活动文章内容
 router.post('/activeContent', (req, res) => {
+  var db = req.db
   const sql = 'SELECT * FROM `xek_active` WHERE id = ? ORDER BY `created_date` DESC;';
   db.query(sql, [req.body.id], e => {
     const data = {
@@ -75,6 +76,7 @@ router.post('/uploadVisitorInfo', (req, res) => {
     let openId = '';
     getOpenId(body.code, e => {
       openId = e;
+      var db = req.db
       const sql = `INSERT INTO xek_register
          (id,active_id, name, mobile_phone,student_id,open_id,create_date) VALUES (?,?,?,?,?,?,NOW());`;
       // eslint-disable-next-line max-len
@@ -118,6 +120,7 @@ router.post('/createActive', (req, res) => {
   const { title, type, description, address, content } = req.body;
   const open_date = req.body.openDate;
   const body = [title, type, description, address, open_date, content];
+  var db = req.db
   const sql = `INSERT INTO xek_active (title,type,description,address,open_date,content,created_date)
   VALUES
     (?,?,?,?,?,?,NOW())`;
@@ -132,6 +135,7 @@ router.put('/delActive', (req, res) => {
   const { id } = req.body;
   const type = activeType[req.body.type].key;
   const sql = 'update xek_active set type=? where id=?';
+  var db = req.db
   db.query(sql, [type, id], () => {
     res.status(200).send({ success: true, data: req.body });
   });

@@ -5,7 +5,7 @@ const { exec } = require('child_process');
 const moment = require('moment')
 const router = express.Router();
 const multer = require('multer');
-const db = require('../../database/connection');
+// const db = require('../../database/connection');
 const {putStreams} = require('../../controllers/qiniu');
 const {response,errorMsg} = require('../../controllers/reponsecontroller')
 
@@ -22,6 +22,7 @@ const upload = multer({ storage });
 const outBasePath ='/tmp/my-img/'
 
 router.post('/uploader',upload.single('file'), (req,res) => {
+    var db = req.db
     const name = encodeURIComponent(req.file.originalname)
     const outpath = name.replace('.pdf','')
     const dirs = fs.readdirSync(outBasePath)

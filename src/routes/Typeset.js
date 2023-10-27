@@ -1,7 +1,6 @@
 // 附件上传， form
 const express = require('express');
 const fs = require('fs')
-const db = require('../database/connection');
 const { uploader } = require('./attachment')
 const router = express.Router();
 const multer = require('multer');
@@ -17,6 +16,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 router.post('/uploader', upload.single('file'),(req,res)=>{
   uploader(req,res,(path,id)=>{
+    var db = req.db
     const typesetSql = 'insert into `xek_typeset` (`attachment_id`,`create_time`) values (?,NOW());';
     db.query(typesetSql,[id],resp=>{
       res.status(200).send(response({
@@ -30,6 +30,7 @@ router.post('/uploader', upload.single('file'),(req,res)=>{
   })
 })
 router.post('/page', (req, res) => {
+  var db = req.db
 
   /**
    * 参数
@@ -67,6 +68,7 @@ router.post('/page', (req, res) => {
   }
 });
 router.put('/',(req,res)=>{
+  var db = req.db
   const {start,download,id} =req.body
   const sql = 'UPDATE `xek_typeset` SET'+ (start?('`start`='+start):'')+(download?('`download`='+download):'')+' WHERE `id`=?'
   if(!id){

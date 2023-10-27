@@ -1,6 +1,5 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const db = require('../database/connection');
 const { getOpenId } = require('../templateInfo');
 
 const router = express.Router();
@@ -27,6 +26,7 @@ router.get('/getUnionId/*', (req, res) => {
  */
 router.post('/feedback', (req, res) => {
   console.log(req.body);
+  var db = req.db
   const sql = 'INSERT INTO xek_feedback (open_id,feedback,created_date) VALUES (?,?,NOW())';
   db.query(sql, [req.body.openId, req.body.feedback], () => {
     const data = {
@@ -46,6 +46,7 @@ router.post('/feedback', (req, res) => {
 router.get('/feedback', (req, res) => {
   let sql = '';
   console.log(req.query);
+  var db = req.db
   if (req.query.openId) {
     sql = `SELECT * FROM xek_feedback WHERE open_id = ${req.query.openId}`;
   } else {
@@ -66,6 +67,7 @@ router.get('/feedback', (req, res) => {
  * userId
  */
 router.get('/registerAll/*', (req, res) => {
+  var db = req.db
   getOpenId(req.params[0], openid => {
     const sql = `SELECT xek_register.id,xek_active.title,xek_active.open_date FROM xek_register
       LEFT JOIN xek_active on xek_register.active_id = xek_active.id WHERE open_id = ?`;
@@ -81,6 +83,7 @@ router.get('/registerAll/*', (req, res) => {
 
 // 使用openId获取当前用户的报名列表
 router.get('/userRegistre/*', (req, res) => {
+  var db = req.db
   getOpenId(req.params['0'], openid => {
     const sql = 'SELECT * FROM xek_register WHERE open_id = ?';
     db.query(sql, [openid], arr => {
@@ -91,7 +94,7 @@ router.get('/userRegistre/*', (req, res) => {
 
 // 用户登录
 router.post('/login', (req, res) => {
-  console.log(req.body);
+  var db = req.db
   const sql = 'select * from xek_user WHERE pass_word = ? AND accept = ?';
   const schema = {
     pass_word: req.body.password,

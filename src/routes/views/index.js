@@ -5,7 +5,6 @@ var router = express.Router()
 // const db = require('../../database/connection');
 
 router.get('/',(req,res)=>{
-  var db = req.db
     res.render('home',{current:'home'})
 })
 
@@ -19,7 +18,6 @@ router.get('/about',(req,res)=>{
 
 router.get('/article',(req,res)=>{
   var db = req.db
-  console.log(db);
     const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? ORDER BY `created_date` DESC LIMIT ?,?;';
   try {
@@ -50,8 +48,9 @@ router.get('/article',(req,res)=>{
 })
 
 router.get('/article/:id',(req,res)=>{
+  var db = req.db
   const countSql = 'SELECT title,content FROM `xek_article` WHERE id=?'
-  db.db(countSql,[req.params.id],data=>{
+  db.query(countSql,[req.params.id],data=>{
     var title = data[0].title
     var content = data[0].content
     res.render('articleDetails',{current:'article',title:title,content:content})

@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request')
-const db = require('../../database/connection');
+// const db = require('../../database/connection');
 const {response,errorMsg} = require('../../controllers/reponsecontroller');
 
 var store = {} 
@@ -26,6 +26,7 @@ function getIpAddress(ip,cb){
  * @param {Array} data 
  */
 function toDb(db,data,res){
+  var db = req.db
   var sql = `insert into custom_logs (ip,host,tag,create_time,user_data,user_client,location) values (?,?,?,NOW(),?,?,?)`
   db.query(sql,data,()=>{
     res.setHeader('Access-Control-Allow-Origin','*');
