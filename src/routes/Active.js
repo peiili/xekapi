@@ -14,7 +14,7 @@ router.get('/activeTitleList', (req, res) => {
   // req type 类型
   const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`content` FROM `xek_active` WHERE type = ? ORDER BY `created_date` DESC;';
-  db.db(sql, [req.query.type], e => {
+  db.query(sql, [req.query.type], e => {
     const data = {
       success: true,
       data: e
@@ -26,7 +26,7 @@ router.get('/activeTitleList', (req, res) => {
 // 获取活动文章内容
 router.post('/activeContent', (req, res) => {
   const sql = 'SELECT * FROM `xek_active` WHERE id = ? ORDER BY `created_date` DESC;';
-  db.db(sql, [req.body.id], e => {
+  db.query(sql, [req.body.id], e => {
     const data = {
       success: true,
       data: e
@@ -79,7 +79,7 @@ router.post('/uploadVisitorInfo', (req, res) => {
          (id,active_id, name, mobile_phone,student_id,open_id,create_date) VALUES (?,?,?,?,?,?,NOW());`;
       // eslint-disable-next-line max-len
       const sqlArr = [data.data.id, body.active.id, body.userName, body.mobilePhone, body.studentID, openId];
-      db.db(sql, sqlArr, () => {
+      db.query(sql, sqlArr, () => {
         res.status(200).send(data);
         const temp_id = 'YNntNqEqFqHdb5_WJ4vshh4DcRnXFGtyaXJ3ZkeUF0w';
 
@@ -87,7 +87,7 @@ router.post('/uploadVisitorInfo', (req, res) => {
         const getActiveSql = 'SELECT `id`,`open_date`,`title`,`address` FROM `xek_active` WHERE id = ?;';
 
         // TODO模板信息从接口获取
-        db.db(getActiveSql, [body.active.id], resp => {
+        db.query(getActiveSql, [body.active.id], resp => {
           const keywords = {
             keywords1: body.userName || `用户${body.mobilePhone}`,
             keywords2: resp[0].address,
@@ -121,7 +121,7 @@ router.post('/createActive', (req, res) => {
   const sql = `INSERT INTO xek_active (title,type,description,address,open_date,content,created_date)
   VALUES
     (?,?,?,?,?,?,NOW())`;
-  db.db(sql, body, e => {
+  db.query(sql, body, e => {
     console.log(e);
     res.status(200).send({ success: true, data: req.body });
   });
@@ -132,7 +132,7 @@ router.put('/delActive', (req, res) => {
   const { id } = req.body;
   const type = activeType[req.body.type].key;
   const sql = 'update xek_active set type=? where id=?';
-  db.db(sql, [type, id], () => {
+  db.query(sql, [type, id], () => {
     res.status(200).send({ success: true, data: req.body });
   });
 });

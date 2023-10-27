@@ -2,9 +2,10 @@ var fs = require('fs')
 var path = require('path')
 var express = require('express')
 var router = express.Router()
-const db = require('../../database/connection');
+// const db = require('../../database/connection');
 
 router.get('/',(req,res)=>{
+  var db = req.db
     res.render('home',{current:'home'})
 })
 
@@ -17,14 +18,16 @@ router.get('/about',(req,res)=>{
 })
 
 router.get('/article',(req,res)=>{
+  var db = req.db
+  console.log(db);
     const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? ORDER BY `created_date` DESC LIMIT ?,?;';
   try {
     const countSql = 'SELECT COUNT(id) as total FROM `xek_article` WHERE type=? and status=?'
     let count = ''
-    db.db(countSql,['2','1'],res1=>{
+    db.query(countSql,['2','1'],res1=>{
       count = res1[0]['total']
-      db.db(sql, ['2','1', 0,10], e => {
+      db.query(sql, ['2','1', 0,10], e => {
         console.log(e);
         var option = {
             current:'article',

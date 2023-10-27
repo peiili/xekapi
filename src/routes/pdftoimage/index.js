@@ -34,7 +34,7 @@ router.post('/uploader',upload.single('file'), (req,res) => {
     putStreams(key,path.join('/tmp/my-pdf',req.file.originalname),(respInfo,respBody)=>{
         const sql = 'insert into `xek_attachment` (`hash`,`path`,`type`,`source`,`create_date`) values (?,?,2,?,NOW());';
         const value = [respBody.hash,key, req.body.source];
-        db.db(sql, value, resp => {
+        db.query(sql, value, resp => {
             console.log(resp.insertId)
         });
     })

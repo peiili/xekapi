@@ -28,7 +28,7 @@ router.get('/getUnionId/*', (req, res) => {
 router.post('/feedback', (req, res) => {
   console.log(req.body);
   const sql = 'INSERT INTO xek_feedback (open_id,feedback,created_date) VALUES (?,?,NOW())';
-  db.db(sql, [req.body.openId, req.body.feedback], () => {
+  db.query(sql, [req.body.openId, req.body.feedback], () => {
     const data = {
       success: true,
       data: {
@@ -51,7 +51,7 @@ router.get('/feedback', (req, res) => {
   } else {
     sql = `SELECT * FROM xek_feedback WHERE status = '${req.query.status}'`;
   }
-  db.db(sql, [], e => {
+  db.query(sql, [], e => {
     console.log(e);
     const data = {
       success: true,
@@ -69,7 +69,7 @@ router.get('/registerAll/*', (req, res) => {
   getOpenId(req.params[0], openid => {
     const sql = `SELECT xek_register.id,xek_active.title,xek_active.open_date FROM xek_register
       LEFT JOIN xek_active on xek_register.active_id = xek_active.id WHERE open_id = ?`;
-    db.db(sql, [openid], e => {
+    db.query(sql, [openid], e => {
       const data = {
         success: true,
         data: e
@@ -83,7 +83,7 @@ router.get('/registerAll/*', (req, res) => {
 router.get('/userRegistre/*', (req, res) => {
   getOpenId(req.params['0'], openid => {
     const sql = 'SELECT * FROM xek_register WHERE open_id = ?';
-    db.db(sql, [openid], arr => {
+    db.query(sql, [openid], arr => {
       res.status(200).send(arr);
     });
   });
@@ -97,7 +97,7 @@ router.post('/login', (req, res) => {
     pass_word: req.body.password,
     accept: req.body.accept
   };
-  db.db(sql, [schema.pass_word, schema.accept], arr => {
+  db.query(sql, [schema.pass_word, schema.accept], arr => {
     let data = {};
     if (arr.length) {
       const token = jwt.sign(

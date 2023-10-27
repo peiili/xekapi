@@ -18,7 +18,7 @@ const upload = multer({ storage });
 router.post('/uploader', upload.single('file'),(req,res)=>{
   uploader(req,res,(path,id)=>{
     const typesetSql = 'insert into `xek_typeset` (`attachment_id`,`create_time`) values (?,NOW());';
-    db.db(typesetSql,[id],resp=>{
+    db.query(typesetSql,[id],resp=>{
       res.status(200).send(response({
         file:{
           path,
@@ -41,12 +41,12 @@ router.post('/page', (req, res) => {
   try {
     const countSql = 'SELECT COUNT(id) FROM `xek_typeset`'
     let count = ''
-    db.db(countSql,[],e=>{
+    db.query(countSql,[],e=>{
       count = e[0]['COUNT(id)']
     })
     const sql = 'SELECT xt.`id`,xt.`create_time`,xt.`start`,xt.`download`,xa.`id` AS `xa_id`,xa.`path` AS `xa_path` FROM `xek_typeset` xt LEFT JOIN `xek_attachment` `xa` ON xt.`attachment_id`=xa.`id` ORDER BY `create_time` DESC LIMIT ?,?;';
 
-    db.db(sql, [(page - 1) * Number(size) || 0, Number(size) || 10], e => {
+    db.query(sql, [(page - 1) * Number(size) || 0, Number(size) || 10], e => {
       const data = {
         success: true,
         data: {
@@ -77,7 +77,7 @@ router.put('/',(req,res)=>{
     res.status(400).send(errorMsg('start or download is required'))
     return;
   }
-  db.db(sql,[id],(resp)=>{
+  db.query(sql,[id],(resp)=>{
     console.log(resp)
     res.status(200).send(response({
         data:'success',

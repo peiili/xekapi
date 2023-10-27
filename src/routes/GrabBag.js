@@ -1,10 +1,10 @@
 const express = require('express');
-const db = require('../database/connection');
 const enums = require('../controllers//enums')
 const router = express.Router();
 
 // 获取文章标题
 router.post('/getList', (req, res) => {
+  var db = req.db
   const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
 
@@ -18,9 +18,9 @@ router.post('/getList', (req, res) => {
   try {
     const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=?'
     let count = ''
-    db.db(countSql,[type,'1'],res1=>{
+    db.query(countSql,[type,'1'],res1=>{
       count = res1[0]['COUNT(id)']
-      db.db(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
+      db.query(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
         const data = {
           success: true,
           data: {
@@ -44,8 +44,9 @@ router.post('/getList', (req, res) => {
 
 // 获取文章内容
 router.post('/getContent', (req, res) => {
+  var db = req.db
   const sql = 'SELECT * FROM `xek_article` WHERE id = ? ORDER BY `created_date` DESC;';
-  db.db(sql, [req.body.id], e => {
+  db.query(sql, [req.body.id], e => {
     const data = {
       success: true,
       data: e
@@ -55,9 +56,10 @@ router.post('/getContent', (req, res) => {
 });
 // 写入文章内容
 router.post('/addContent', (req, res) => {
+  var db = req.db
   const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`marked`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?,?)';
   var {title,content,marked,keywords,description, type} = req.body;
-  db.db(sql,[title,content,marked,keywords,description, type], success => {
+  db.query(sql,[title,content,marked,keywords,description, type], success => {
     const data = {
       success: true,
       data: true
@@ -67,10 +69,11 @@ router.post('/addContent', (req, res) => {
 });
 // 更新文章内容
 router.put('/putContent', (req, res) => {
+  var db = req.db
   const sql = 'UPDATE `xek_article` SET title=?,content=?,marked=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
   console.log(req.body)
   var {title,content,marked,keywords,description, id} = req.body;
-  db.db(sql,[title,content,marked,keywords,description, id], success => {
+  db.query(sql,[title,content,marked,keywords,description, id], success => {
     const data = {
       success: true,
       data: true
@@ -80,8 +83,9 @@ router.put('/putContent', (req, res) => {
 });
 // 更新文章浏览量
 router.get('/view/:id', (req, res) => {
+  var db = req.db
   const sql = 'UPDATE `xek_article` xa SET xa.view= xa.view+ 1 where id= ?';
-  db.db(sql,[req.params.id], success => {
+  db.query(sql,[req.params.id], success => {
     const data = {
       success: true,
       data: true
@@ -91,8 +95,9 @@ router.get('/view/:id', (req, res) => {
 });
 // 删除文章文章内容
 router.delete('/delContent', (req, res) => {
+  var db = req.db
   const sql = 'UPDATE `xek_article` SET `status`=? WHERE `id`=?';
-  db.db(sql,[enums.articleStatus.DELETED.key,req.query.id], success => {
+  db.query(sql,[enums.articleStatus.DELETED.key,req.query.id], success => {
     const data = {
       success: true,
       data: true

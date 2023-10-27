@@ -10,26 +10,34 @@ const pool = mysql.createPool({
   password: databaseConfig.password,
   database: databaseConfig.database
 });
-
+let client = null
 /**
  * @param {string} sql 语句
  * @param {object} arr  参数
  * @param {Function} callback
  */
-function getDb(sql, arr, callback) {
+function connect(sql, arr, callback) {
   pool.getConnection((err, connection) => {
     if (err) throw err;
-    const query = connection.query(sql, arr, (error, results) => {
-      if (error) throw error;
-      console.log('connect success');
-      connection.release();
-      callback(results);
-    });
-
-    // 打印sql
-    console.log(query.sql);
+    client = connection
+    client.release();
+    console.log('connect success');
   });
 }
+connect()
 
-module.exports.db = getDb;
-module.exports.query = getDb;
+function query(sql, arr, callback){
+  if(client){
+    console.log(client);
+    const query = client.query(sql, arr, (error, results) => {
+      if (error) throw error;
+      // client.release();
+      callback(results);
+    });
+       // 打印sql
+    console.log(query.sql);
+  }
+}
+
+
+module.exports.query = query;

@@ -27,7 +27,7 @@ const uploader =function(req,res,cb){
     if (respInfo.statusCode == 200) {
       const sql = 'insert into `xek_attachment` (`hash`,`path`,`source`,`create_date`) values (?,?,?,NOW());';
       const value = [respBody.hash,key, req.body.source];
-      db.db(sql, value, resp => {
+      db.query(sql, value, resp => {
         cb(key,resp.insertId)
       });
     } else {
