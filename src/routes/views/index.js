@@ -62,6 +62,7 @@ router.get('/other/binary',(req,res)=>{
 })
 
 router.get('/assets/*',(req,res)=>{
+  console.log(req.url);
     var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
     res.end(file);
 })

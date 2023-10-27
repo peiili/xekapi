@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const request = require('request')
-// const db = require('../../database/connection');
 const {response,errorMsg} = require('../../controllers/reponsecontroller');
 
 var store = {} 
@@ -35,7 +34,7 @@ function toDb(db,data,res){
   })
 }
 router.get('/',(req,res)=>{
-  // var ip = req.ip
+  var db = req.db
   var host = req.headers['referer']
   var tag = req.query.tag
   var user_data = req.query.userData||''
