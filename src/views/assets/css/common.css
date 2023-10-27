@@ -1,0 +1,59 @@
+blockquote,body,button,code,dd,div,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,html,input,legend,li,ol,p,pre,td,textarea,th,ul {
+  margin: 0;
+  padding: 0
+}
+
+ol,ul {
+  list-style: none
+}
+button,input,optgroup,option,select,textarea {
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit
+}
+
+:link img,:visited img,a img,fieldset,img {
+  border: 0
+}
+
+a {
+  text-decoration: none;
+}
+*,
+:after,
+:before {
+  box-sizing: inherit;
+}
+.clearfix:after {
+  display: table;
+  content: '';
+  clear: both;
+}
+body {
+  position: relative;
+  font: 14px/1.2 -apple-system-font, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, sans-serif, "Helvetica Neue", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei UI", "Microsoft YaHei", Arial, sans-serif;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-overflow-scrolling: touch;
+  -webkit-text-size-adjust: 100%;
+  color: #404040;
+}
+body {
+  width: auto;
+  height: auto;
+  color: #2b2b2b;
+  font-family: Arial, "Hiragino Sans GB", "STHeiti", "Helvetica Neue", Helvetica, "Microsoft Yahei", "Hiragino Sans GB", "WenQuanYi Micro Hei", sans-serif;
+}
+@media screen and (min-width: 1921px) {
+  body {
+    background-size: cover;
+  }
+}
+
+
+
+.page_warp {
+  background: url('/assets/img/news_author_index.png') center top no-repeat;
+  background-size: 100% 376px;
+  min-width: 1200px;
+}

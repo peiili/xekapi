@@ -2,15 +2,10 @@ var fs = require('fs')
 var path = require('path')
 var express = require('express')
 var router = express.Router()
-// const db = require('../../database/connection');
+var home = require('./home_route')
 
-router.get('/',(req,res)=>{
-    res.render('home',{current:'home'})
-})
-
-router.get('/home',(req,res)=>{
-    res.render('home',{current:'home'})
-})
+router.get('/',home)
+router.get('/home',home)
 
 router.get('/about',(req,res)=>{
     res.render('about',{current:'about'})
@@ -55,14 +50,20 @@ router.get('/article/:id',(req,res)=>{
     var content = data[0].content
     res.render('articleDetails',{current:'article',title:title,content:content})
   })
-  })
+})
   
 router.get('/other',(req,res)=>{
   res.render('other',{current:'other'})
 })
+
 router.get('/other/binary',(req,res)=>{
   console.log('other/binary');
   res.render('other/binary',{current:'other'})
+})
+
+router.get('/assets/*',(req,res)=>{
+    var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
+    res.end(file);
 })
 
 router.get('*.css',(req,res)=>{
@@ -70,9 +71,11 @@ router.get('*.css',(req,res)=>{
     res.setHeader('content-type','text/css;charset=UTF-8')
     res.send(file);
 })
+
 router.get('*.js',(req,res)=>{
   var file = fs.readFileSync(path.join(process.env._root,'src/views',req.url));
   res.setHeader('content-type','text/javascript;charset=UTF-8')
   res.send(file);
 })
+
 module.exports = router
