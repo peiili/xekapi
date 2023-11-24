@@ -2,10 +2,13 @@ var fs = require('fs')
 var path = require('path')
 var express = require('express')
 var router = express.Router()
-var home = require('./home_route')
+var home = require('../../controllers/view/homeRoute')
 
 router.get('/',home)
 router.get('/home',home)
+
+var newContent = require('./../../controllers/view/newContent')
+router.get('/news-content',newContent)
 
 router.get('/about',(req,res)=>{
     res.render('about',{current:'about'})
