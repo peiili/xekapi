@@ -26,6 +26,12 @@ function connect(sql, arr, callback) {
 }
 connect()
 
+setInterval(()=>{
+  pool.query('select now() time',[],function(err, res){
+      console.log(res);
+  })
+},5*60*1e3)
+
 function query(sql, arr, callback){
   if(client){
     console.log(client);
