@@ -24,8 +24,8 @@ router.post('/getList', (req, res) => {
         const data = {
           success: true,
           data: {
-            currentPage:page,
-            total:Math.ceil(count/Number(size)),
+            currentPage: page,
+            totalPage: Math.ceil(count/Number(size)),
             count,
             list:e,
           }
