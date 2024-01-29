@@ -16,6 +16,9 @@ app.use(bodyParser.xml());
 app.set('views',path.join(__dirname,'src/views'))
 app.set('view engine','ejs')
 
+if(!fs.existsSync(path.join(__dirname, '/logs/'))) {
+  fs.mkdirSync(path.join(__dirname, '/logs/'))
+}
 const accessLogStream = fs.createWriteStream(path.join(__dirname, '/logs/access.log'), { flags: 'a' });
 if (process.env.NODE_ENV) {
   app.use(morgan('dev', { stream: accessLogStream }));
