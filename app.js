@@ -6,14 +6,9 @@ const process = require('process');
 const db = require('./src/database/connection');
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
-const getDomDate = require('./src/cheerio');
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json(
-  {
-    limit:2048000
-  }
-));
+app.use(bodyParser.json({limit:2048000}));
 // 设置xml解析，用于邮箱服务
 app.use(bodyParser.xml());
 
@@ -28,6 +23,7 @@ if (process.env.NODE_ENV) {
   app.use(morgan('common', { stream: accessLogStream }));
 }
 process.env._root = __dirname
+
 app.all('*', (req, res, next) => {
   req.db = db
   next()
@@ -42,10 +38,8 @@ const Bing = require('./src/routes/bing');
 const user = require('./src/routes/user');
 const Typeset = require('./src/routes/Typeset');
 const attachment = require('./src/routes/attachment');
-const PdfToImage = require('./src/routes/pdftoimage/index');
 const Website = require('./src/routes/website/index');
 const Wechat = require('./src/routes/wechat/index.js');
-// const blurhash = require('./src/routes/blurhash/index');
 const Log = require('./src/routes/log/index.js');
 const Mailer = require('./src/routes/mailer/index.js');
 // 爬虫
@@ -56,11 +50,9 @@ app.use('/api/grabbag', grabbag)
    .use('/api/user', user)
    .use('/api/attachment', attachment)
    .use('/api/typeset', Typeset)
-   .use('/api/pdftoimage',PdfToImage)
    .use('/api/wechat',Wechat)
    .use('/api/log',Log)
    .use('/api/website',Website)
-  //  .use('/api/blurhash',blurhash)
    .use('/api/mailer',Mailer)
    .use('/',views)
    .use('/views',views)
