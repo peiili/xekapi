@@ -6,7 +6,7 @@ const router = express.Router();
 router.post('/page', (req, res) => {
   var db = req.db
   const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
+    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND website_id = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
 
   /**
    * 参数
@@ -14,13 +14,17 @@ router.post('/page', (req, res) => {
    * 当前页数，
    * 每页显示条数，默认10
    */
-  const { type, status,fuzzy, page, size } = req.body;
+  const { type, website_id, status, fuzzy, page, size } = req.body;
+  var _page = page-1
+  if(_page<0){
+    _page = 0
+  }
   try {
-    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=?'
+    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=? and website_id=?'
     let count = ''
-    db.query(countSql,[type,'1'],res1=>{
+    db.query(countSql,[type,'1', website_id],res1=>{
       count = res1[0]['COUNT(id)']
-      db.query(sql, [type,status,`%${fuzzy}%`, (page - 1) * Number(size) || 0, Number(size) || 10], e => {
+      db.query(sql, [type, website_id, status,`%${fuzzy}%`, _page * Number(size) || 0, Number(size) || 10], e => {
         const data = {
           success: true,
           data: {
@@ -43,7 +47,7 @@ router.post('/page', (req, res) => {
 });
 
 // 获取文章内容
-router.post('/getContent', (req, res) => {
+router.post('/detail', (req, res) => {
   var db = req.db
   const sql = 'SELECT * FROM `xek_article` WHERE id = ? ORDER BY `created_date` DESC;';
   db.query(sql, [req.body.id], e => {

@@ -15,9 +15,9 @@ router.post('/add',function(req, res){
   }
   var sql = 'insert into xek_website (id, name, beian, keywords, description) values(?,?,?,?,?)'
   var sqlParams = Object.values(params)
-  db.query(sql, sqlParams, function(resp){
+  db.query(sql, sqlParams, function(){
     res.send({
-      code: 200,
+      success: true,
       data: {
          id: params.id,
       }

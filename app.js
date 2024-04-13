@@ -7,10 +7,15 @@ const db = require('./src/database/connection');
 const bodyParser = require('body-parser');
 require('body-parser-xml')(bodyParser);
 const app = express();
+
+const cors = require('./hooks/cors.js');
+app.use(cors);
+
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json({limit:2048000}));
 // 设置xml解析，用于邮箱服务
 app.use(bodyParser.xml());
+
 
 if(!fs.existsSync(path.join(__dirname, '/logs/'))) {
   fs.mkdirSync(path.join(__dirname, '/logs/'))
