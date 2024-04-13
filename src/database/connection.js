@@ -34,7 +34,7 @@ setInterval(()=>{
 
 function query(sql, arr, callback){
   if(client){
-    console.log(client);
+    // console.log(client);
     const query = client.query(sql, arr, (error, results) => {
       if (error) throw error;
       // client.release();

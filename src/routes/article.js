@@ -1,9 +1,9 @@
 const express = require('express');
-const enums = require('../controllers//enums')
+const enums = require('../controllers/enums')
 const router = express.Router();
 
 // 获取文章标题
-router.post('/getList', (req, res) => {
+router.post('/page', (req, res) => {
   var db = req.db
   const sql =
     'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
