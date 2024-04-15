@@ -5,29 +5,52 @@ const router = express.Router();
 // 获取文章标题
 router.post('/page', (req, res) => {
   var db = req.db
-  const sql =
-    'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view` FROM `xek_article` WHERE type = ? AND website_id = ? AND `status`=? AND `title` LIKE ? ORDER BY `created_date` DESC LIMIT ?,?;';
-
   /**
    * 参数
    * 文章类型，
    * 当前页数，
    * 每页显示条数，默认10
    */
-  const { type, website_id, status, fuzzy, page, size } = req.body;
+  const { type, status, fuzzy, page, size } = req.body;
+  
+  let website_id = req.body.website_id
+
+  const auth_key = req.headers.auth_key
+  if(auth_key) {
+    website_id = req.account[req.headers.auth_key].website_id
+  }
   var _page = page-1
   if(_page<0){
     _page = 0
   }
   try {
-    const countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and status=? and website_id=?'
+    let countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and website_id=? and title like ?'
+    let params = [type, website_id, `%${fuzzy||''}%`]
+    if(status){
+      params.push(status)
+      countSql+= 'and status=?;'
+    }
     let count = ''
-    db.query(countSql,[type,'1', website_id],res1=>{
+    db.query(countSql, params, (res1)=>{
       count = res1[0]['COUNT(id)']
-      db.query(sql, [type, website_id, status,`%${fuzzy}%`, _page * Number(size) || 0, Number(size) || 10], e => {
+      const offset =  _page * Number(size) || 0
+      const limit = Number(size) || 10
+      let sql =
+      'SELECT `id`,`title`,`created_date`,`thumbnail`,`description`,`keywords`,`view`, `status` FROM `xek_article` WHERE type = ? AND website_id = ? AND `title` LIKE ? ';
+      if(status){
+        sql += 'and status=?'
+      }
+      params.push(...[offset, limit])
+      sql+= ' ORDER BY `created_date` DESC LIMIT ?,?;'
+  
+      db.query(sql, params, e => {
         const data = {
           success: true,
-          data: {
+          currentPage: page,
+          totalPage: Math.ceil(count/Number(size)),
+          count,
+          list:e,
+          data: {  // 兼容移动端
             currentPage: page,
             totalPage: Math.ceil(count/Number(size)),
             count,
@@ -64,6 +87,19 @@ router.post('/addContent', (req, res) => {
   const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`marked`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?,?)';
   var {title,content,marked,keywords,description, type} = req.body;
   db.query(sql,[title,content,marked,keywords,description, type], success => {
+    const data = {
+      success: true,
+      data: true
+    };
+    res.status(200).send(data);
+  });
+});
+// 更新文章状态
+router.put('/status', (req, res) => {
+  var db = req.db
+  const sql = 'UPDATE `xek_article` SET status=? WHERE `id`=?';
+  var { status, id} = req.body;
+  db.query(sql,[status, id], success => {
     const data = {
       success: true,
       data: true

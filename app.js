@@ -28,8 +28,12 @@ if (process.env.NODE_ENV) {
 }
 process.env._root = __dirname
 
+var account = {
+
+}
 app.all('*', (req, res, next) => {
   req.db = db
+  req.account = account
   next()
 });
 

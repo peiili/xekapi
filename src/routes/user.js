@@ -1,5 +1,5 @@
 const express = require('express');
-const jwt = require('jsonwebtoken');
+const uuid = require('uuid').v4
 const { getOpenId } = require('../templateInfo');
 
 const router = express.Router();
@@ -95,32 +95,34 @@ router.get('/userRegistre/*', (req, res) => {
 // 用户登录
 router.post('/login', (req, res) => {
   var db = req.db
-  const sql = 'select * from xek_user WHERE pass_word = ? AND accept = ?';
-  const schema = {
-    pass_word: req.body.password,
-    accept: req.body.accept
-  };
-  db.query(sql, [schema.pass_word, schema.accept], arr => {
+  const sql = 'select * from xek_user WHERE pass_word = ? AND name = ?';
+  const {password, username, type} = req.body
+  db.query(sql, [ password, username ], arr => {
     let data = {};
+    var token = uuid()
+    req.account[token] = arr[0] 
     if (arr.length) {
-      const token = jwt.sign(
-        {
-          id: arr[0].id
-        },
-        'jwttoken'
-      );
       data = {
-        success: true,
-        message: '登录成功',
-        token
+        status: 'ok',
+        type,
+        websiteId: arr[0].website_id,
+        currentAuthority: token,
       };
     } else {
       data = {
-        success: false,
+        status: 'error',
         message: '账号或密码错误'
       };
     }
     res.status(200).send(data);
+  });
+});
+// 用户详情
+router.get('/currentUser', (req, res) => {
+  console.log(req.account[req.headers.auth_key]);
+  res.status(200).send({
+    success: true,
+    data: req.account[req.headers.auth_key]
   });
 });
 module.exports = router;
