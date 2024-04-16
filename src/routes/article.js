@@ -134,10 +134,11 @@ router.get('/view/:id', (req, res) => {
   });
 });
 // 删除文章文章内容
-router.delete('/delContent', (req, res) => {
+router.delete('/del', (req, res) => {
   var db = req.db
-  const sql = 'UPDATE `xek_article` SET `status`=? WHERE `id`=?';
-  db.query(sql,[enums.articleStatus.DELETED.key,req.query.id], success => {
+  var id = req.query.id
+  const sql = 'delete from `xek_article` WHERE `id`=?';
+  db.query(sql,[ id ], () => {
     const data = {
       success: true,
       data: true
