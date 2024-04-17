@@ -28,7 +28,8 @@ router.post('/add',function(req, res){
 router.get('/',function(req,res){
   var sql = 'select * from xek_website where id=?'
   var db = req.db
-  db.query(sql,[2],function(resp){
+  var id = req.query.id
+  db.query(sql,[id],function(resp){
     res.status(200).send(response(resp[0]));
   })
 })
