@@ -1,5 +1,6 @@
 const express = require('express');
-const enums = require('../controllers/enums')
+const enums = require('../controllers/enums');
+const e = require('express');
 const router = express.Router();
 
 // 获取文章标题
@@ -24,15 +25,17 @@ router.post('/page', (req, res) => {
     _page = 0
   }
   try {
-    let countSql = 'SELECT COUNT(id) FROM `xek_article` WHERE type=? and website_id=? and title like ?'
+    let countSql = 'SELECT COUNT(id) as count FROM `xek_article` WHERE type=? and website_id=? and title like ?'
+
     let params = [type, website_id, `%${fuzzy||''}%`]
+
     if(status){
       params.push(status)
       countSql+= 'and status=?;'
     }
     let count = ''
     db.query(countSql, params, (res1)=>{
-      count = res1[0]['COUNT(id)']
+      count = res1[0].count
       const offset =  _page * Number(size) || 0
       const limit = Number(size) || 10
       let sql =
@@ -82,11 +85,21 @@ router.get('/detail', (req, res) => {
   });
 });
 // 写入文章内容
-router.post('/addContent', (req, res) => {
+router.post('/add', (req, res) => {
   var db = req.db
-  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`,`content`,`marked`,`keywords`,`description`,`type`) VALUES(?,NOW(),?,?,?,?,?)';
-  var {title,content,marked,keywords,description, type} = req.body;
-  db.query(sql,[title,content,marked,keywords,description, type], success => {
+  const auth_key = req.headers.auth_key
+  var website_id = ''
+  if(auth_key) {
+    website_id = req.account[req.headers.auth_key].website_id
+  } else {
+    res.status(400).json({
+      success: false,
+      errMsg: 'auth_key is require'
+    })
+  }
+  const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`, `marked`,`keywords`,`description`,`type`,`website_id`) VALUES(?,NOW(),?,?,?,?,?)';
+  var { title, marked, keywords, description, type } = req.body;
+  db.query(sql,[ title, marked, keywords, description, type, website_id ], success => {
     const data = {
       success: true,
       data: true
@@ -108,12 +121,13 @@ router.put('/status', (req, res) => {
   });
 });
 // 更新文章内容
-router.put('/putContent', (req, res) => {
+router.put('/put/:id', (req, res) => {
   var db = req.db
-  const sql = 'UPDATE `xek_article` SET title=?,content=?,marked=?,keywords=?,description=?,created_date=NOW() WHERE `id`=?';
-  console.log(req.body)
-  var {title,content,marked,keywords,description, id} = req.body;
-  db.query(sql,[title,content,marked,keywords,description, id], success => {
+  const sql = 'UPDATE `xek_article` SET title=?, marked=?, keywords=?, description=?, created_date=NOW() WHERE `id`=?';
+
+  var id = req.params.id
+  var { title, marked, keywords, description } = req.body;
+  db.query(sql, [ title, marked, keywords, description, id], success => {
     const data = {
       success: true,
       data: true
