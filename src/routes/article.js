@@ -70,13 +70,13 @@ router.post('/page', (req, res) => {
 });
 
 // 获取文章内容
-router.post('/detail', (req, res) => {
+router.get('/detail', (req, res) => {
   var db = req.db
-  const sql = 'SELECT * FROM `xek_article` WHERE id = ? ORDER BY `created_date` DESC;';
-  db.query(sql, [req.body.id], e => {
+  const sql = 'SELECT * FROM `xek_article` WHERE id = ?;';
+  db.query(sql, [req.query.id], e => {
     const data = {
       success: true,
-      data: e
+      data: e[0]
     };
     res.status(200).send(data);
   });
