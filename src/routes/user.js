@@ -119,10 +119,9 @@ router.post('/login', (req, res) => {
 });
 // 用户详情
 router.get('/currentUser', (req, res) => {
-  console.log(req.account[req.headers.auth_key]);
   res.status(200).send({
     success: true,
-    data: req.account[req.headers.auth_key]
+    data: req.account[req.headers['x-auth-key']]
   });
 });
 module.exports = router;

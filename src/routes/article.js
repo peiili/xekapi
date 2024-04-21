@@ -16,9 +16,9 @@ router.post('/page', (req, res) => {
   
   let website_id = req.body.website_id
 
-  const auth_key = req.headers.auth_key
+  const auth_key = req.headers['x-auth-key']
   if(auth_key) {
-    website_id = req.account[req.headers.auth_key].website_id
+    website_id = req.account[auth_key].website_id
   }
   var _page = page-1
   if(_page<0){
@@ -87,14 +87,14 @@ router.get('/detail', (req, res) => {
 // 写入文章内容
 router.post('/add', (req, res) => {
   var db = req.db
-  const auth_key = req.headers.auth_key
+  const auth_key = req.headers['x-auth-key']
   var website_id = ''
   if(auth_key) {
-    website_id = req.account[req.headers.auth_key].website_id
+    website_id = req.account[auth_key].website_id
   } else {
     res.status(400).json({
       success: false,
-      errMsg: 'auth_key is require'
+      errMsg: 'x-auth-key is require'
     })
   }
   const sql = 'INSERT INTO  `xek_article` (`title`,`created_date`, `marked`,`keywords`,`description`,`type`,`website_id`) VALUES(?,NOW(),?,?,?,?,?)';
