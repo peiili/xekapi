@@ -33,6 +33,18 @@ router.get('/',function(req,res){
     res.status(200).send(response(resp[0]));
   })
 })
+
+router.get('/by-host',function(req,res){
+  var db = req.db
+  var sql = "select * from xek_website where host like '%"+ req.query.host +"%';"
+  db.query(sql, [], function(resp){
+    if(resp.length>0){
+      res.status(200).send(response(resp[0]));
+    } else {
+      res.status(400).send({});
+    }
+  })
+})
 router.put('/',function(req,res){
   const { title='',description='',host='',keywords='',copyright='' } = req.body;
   var db = req.db

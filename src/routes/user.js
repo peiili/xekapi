@@ -117,6 +117,14 @@ router.post('/login', (req, res) => {
     res.status(200).send(data);
   });
 });
+// 用户登出
+router.post('/logout', (req, res) => {
+    const auth_key = req.headers['x-auth-key']
+    req.account[auth_key] = undefined
+    res.status(200).send({
+      
+    });
+});
 // 用户详情
 router.get('/currentUser', (req, res) => {
   res.status(200).send({
