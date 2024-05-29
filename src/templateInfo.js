@@ -3,9 +3,9 @@ const request = require('request');
 const appid = 'wxc0e9b2d814c97c58';
 const secretId = '5ba9e527fd05c9d3773a60dbe850ded6';
 let accessToken = '';
-getAccessToken();
+// getAccessToken();
 setInterval(() => {
-  getAccessToken();
+  // getAccessToken();
 }, 1000 * 60 * 60 * 2);
 function getAccessToken() {
   request(

@@ -28,9 +28,7 @@ if (process.env.NODE_ENV) {
 }
 process.env._root = __dirname
 
-var account = {
-
-}
+var account = {}
 app.all('*', (req, res, next) => {
   req.db = db
   req.account = account
@@ -55,6 +53,7 @@ app.use('/api/article', article)
    .use('/api/log',Log)
    .use('/api/website',Website)
    .use('/api/mailer',Mailer)
+   .use('/api/qiniu', require('./src/routes/qiniu/index.js'))
 const port = 5166;
 app.listen(port, () => {
   console.log(`App listening on port ${port}`);

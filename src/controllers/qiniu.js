@@ -1,9 +1,10 @@
 const qiniu = require('qiniu');
 
 const config = new qiniu.conf.Config();
-const accesskey = process.env.QINIU_ACCESSKEY;
-const SecretKey = process.env.QINIU_SECRETKEY;
-
+const accessKey = process.env.QINIU_ACCESSKEY;
+const secretKey = process.env.QINIU_SECRETKEY;
+console.log(accessKey,  secretKey);
+const mac = new qiniu.auth.digest.Mac(accessKey, secretKey);
 // 空间对应的机房
 config.zone = qiniu.zone.Zone_z0;
 const formUploader = new qiniu.form_up.FormUploader(config);
@@ -14,6 +15,7 @@ const options = {
   returnBody: '{"key":"$(key)","hash":"$(etag)","fsize":$(fsize),"bucket":"$(bucket)","name":"$(x:name)"}',
   callbackBodyType: 'application/json'
 };
+
 /**
  * 上传本地文件
  * @param key 目标文件名
@@ -22,7 +24,6 @@ const options = {
 const putStreams =function(key, localFile,cb) {
 
   const putPolicy = new qiniu.rs.PutPolicy(options);
-  const mac = new qiniu.auth.digest.Mac(accesskey, SecretKey);
   const Token = putPolicy.uploadToken(mac);
   formUploader.putFile(Token, key, localFile, putExtra, (respErr, respBody, respInfo) => {
     if (respErr) {
@@ -45,7 +46,6 @@ const putStreams =function(key, localFile,cb) {
  */
 const formStreams= function(key,stream,cb){
   const putPolicy = new qiniu.rs.PutPolicy(options);
-  const mac = new qiniu.auth.digest.Mac(accesskey, SecretKey);
   const Token = putPolicy.uploadToken(mac);
   var formUploader = new qiniu.form_up.FormUploader(config);
   var putExtra = new qiniu.form_up.PutExtra();
@@ -58,8 +58,17 @@ const formStreams= function(key,stream,cb){
     cb(respInfo,respBody)
   });
 }
+
+
+const bucketManager = new qiniu.rs.BucketManager(mac, config);
+const getNetResource = function(resUrl, key, cb) {
+  const bucket = "xek";
+  const _key = `net_image/${key}`;
+  bucketManager.fetch(resUrl, bucket, _key,cb)
+}
 // exports.formStreams = formStreams;
 module.exports = {
   putStreams,
-  formStreams
+  formStreams,
+  getNetResource,
 };

@@ -5,11 +5,7 @@
   "main": "app.js",
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon app.js",
-    "start": "set NODE_ENV=development && node app.js",
-    "startLoop": "set NODE_ENV=development && nodemon ./src/wechat/logic.js",
-    "remote_start": "set NODE_ENV=remote && node app.js",
-    "proStart": "export NODE_ENV=production && pm2 start app.js",
-    "proStartLoop": "export NODE_ENV=production && pm2 start ./src/wechat/logic.js",
+    "start": "export NODE_ENV=production && pm2 start app.js --name=xekapi",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "yhl",

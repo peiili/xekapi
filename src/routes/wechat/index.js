@@ -5,16 +5,16 @@ const router = express.Router();
 const { getOpenId, getUserInfo, sendMessage, getAccessToken,getNumber,getQrcode,sha1  } = require('./control');
 
 let accessToken = ''
-getAccessToken((body)=>{
-  accessToken = body.access_token
-  console.log(accessToken)
-})
-setInterval(()=>{
-  getAccessToken((body)=>{
-    // console.log(body)
-    accessToken = body.access_token
-  })
-},7100*1000)
+// getAccessToken((body)=>{
+//   accessToken = body.access_token
+//   console.log(accessToken)
+// })
+// setInterval(()=>{
+//   getAccessToken((body)=>{
+//     // console.log(body)
+//     accessToken = body.access_token
+//   })
+// },7100*1000)
 
 // 获取文章标题
 router.post('/subscribe/qrcode', (req, res) => {
