@@ -1,4 +1,3 @@
-const fs = require('fs')
 const express = require('express');
 const router = express.Router();
 const qiniuControl = require('./../../controllers/qiniu'); 
@@ -11,7 +10,7 @@ router.post('/net-resource', function(req, res){
   (function fn(i){
     url = list[i];
     key = url.split('/').pop()
-    qiniuControl.getNetResource(url,key,(err, respBody, respInfo)=>{
+    qiniuControl.uploadNetResource(url,key,(err, respBody, respInfo)=>{
       if(err){
         error(err)
       }else{
@@ -26,6 +25,24 @@ router.post('/net-resource', function(req, res){
       }
     })
   })(0)
+})
+router.get('/net-resource', function(req, res){
+  const marker = req.marker || '';
+  qiniuControl.getNetResource(marker, (err, respBody, respInfo)=>{
+  if(err){
+      console.error(err);
+      res.status(500).send(err)
+    } else {
+    /**
+     * respBody
+     * @param {Object} respBody
+     * @param {Object} respBody
+     * @param {String} [respBody.marker]
+     * @param {Array} respBody.items
+     */
+      res.send(respBody)
+    }
+  })
 })
 
 module.exports = router
