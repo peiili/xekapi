@@ -9,21 +9,32 @@ router.post('/net-resource', function(req, res){
   let key = '';
   (function fn(i){
     url = list[i];
-    key = url.split('/').pop()
-    qiniuControl.uploadNetResource(url,key,(err, respBody, respInfo)=>{
-      if(err){
-        error(err)
-      }else{
-        i++
-        if(i<list.length){
-          fn(i)
-        }else {
-          res.send({
-            code: 200,
-          })
+    if(url.indexOf('/') > -1) {
+      key = url.split('/').pop()
+      qiniuControl.uploadNetResource(url,key,(err, respBody, respInfo)=>{
+        if(err){
+          error(err)
+        }else{
+          i++
+          if(i<list.length){
+            fn(i)
+          }else {
+            res.send({
+              code: 200,
+            })
+          }
         }
+      })
+    } else {
+      i++
+      if(i<list.length){
+        fn(i)
+      }else {
+        res.send({
+          code: 200,
+        })
       }
-    })
+    }
   })(0)
 })
 router.get('/net-resource', function(req, res){
@@ -40,7 +51,7 @@ router.get('/net-resource', function(req, res){
      * @param {String} [respBody.marker]
      * @param {Array} respBody.items
      */
-      res.send(respBody)
+      res.send({ prefix: 'http://xek.dlsjf.top', ...respBody})
     }
   })
 })
